@@ -1,0 +1,187 @@
+swagger: "2.0"
+info:
+  title: WantGo API
+  description: This is WantGoAPI
+  version: ""
+host: localhost:8081
+consumes:
+- application/json
+- application/xml
+- application/gob
+produces:
+- application/json
+- application/xml
+- application/gob
+paths:
+  /card-list:
+    get:
+      tags:
+      - WantGo
+      summary: getSimpleCardList WantGo
+      operationId: WantGo#getSimpleCardList
+      responses:
+        "204":
+          description: No Content response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/simpleCardResponse'
+      schemes:
+      - http
+  /card/{cardId}:
+    get:
+      tags:
+      - WantGo
+      summary: getCardInfo WantGo
+      operationId: WantGo#getCardInfo
+      parameters:
+      - name: cardId
+        in: path
+        description: card id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            $ref: '#/definitions/WantGoGetCardInfoResponseBody'
+      schemes:
+      - http
+    put:
+      tags:
+      - WantGo
+      summary: putCardInfo WantGo
+      operationId: WantGo#putCardInfo
+      parameters:
+      - name: cardId
+        in: path
+        description: card id
+        required: true
+        type: integer
+      - name: string
+        in: body
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK response.
+      schemes:
+      - http
+    post:
+      tags:
+      - WantGo
+      summary: postCardInfo WantGo
+      operationId: WantGo#postCardInfo
+      parameters:
+      - name: cardId
+        in: path
+        description: card id
+        required: true
+        type: integer
+      - name: string
+        in: body
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK response.
+      schemes:
+      - http
+    delete:
+      tags:
+      - WantGo
+      summary: deleteCardInfo WantGo
+      operationId: WantGo#deleteCardInfo
+      parameters:
+      - name: cardId
+        in: path
+        description: card id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK response.
+      schemes:
+      - http
+  /openapi.json:
+    get:
+      tags:
+      - WantGo
+      summary: Download ./gen/http/openapi.json
+      operationId: WantGo#/openapi.json
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+      schemes:
+      - http
+definitions:
+  WantGoGetCardInfoResponseBody:
+    title: WantGoGetCardInfoResponseBody
+    type: object
+    properties:
+      cardAuthor:
+        type: string
+        example: Saepe quaerat.
+      cardDescription:
+        type: string
+        example: Maxime sint impedit omnis.
+      cardTitle:
+        type: string
+        example: Eos minima ab sit.
+      imageUrl:
+        type: string
+        example: Odio officia aut cupiditate asperiores qui id.
+      locationAddress:
+        type: string
+        example: Consequatur id.
+      locationUrl:
+        type: string
+        example: Ratione non voluptatem molestiae.
+      tags:
+        type: array
+        items:
+          type: string
+          example: Aut dolorum deleniti id et vero ut.
+        example:
+        - Nihil est earum rerum dignissimos qui.
+        - Esse non rem asperiores dolore omnis voluptas.
+        - Sequi est.
+        - Hic et aperiam temporibus eum qui.
+    example:
+      cardAuthor: Et quisquam autem reiciendis at numquam.
+      cardDescription: Repudiandae earum quis dolorem quo eos.
+      cardTitle: Aliquid corporis eaque voluptate vero libero qui.
+      imageUrl: Consectetur voluptates nesciunt ut.
+      locationAddress: Molestias voluptatum.
+      locationUrl: Qui quod.
+      tags:
+      - Eum unde corrupti.
+      - Aut aut est dolore temporibus.
+      - Quia odit et veniam.
+      - Sunt voluptatibus sit odit et placeat.
+  simpleCardResponse:
+    title: simpleCardResponse
+    type: object
+    properties:
+      cardAuthor:
+        type: string
+        example: Omnis sit aut suscipit nihil numquam.
+      cardId:
+        type: integer
+        example: 1045841296031323956
+        format: int64
+      cardTitle:
+        type: string
+        example: Ipsam mollitia et voluptatem.
+      imageUrl:
+        type: string
+        example: Similique et cupiditate labore repudiandae et.
+    example:
+      cardAuthor: Non velit est repudiandae iure vel voluptatem.
+      cardId: 1907344422367774815
+      cardTitle: Dolore nemo non.
+      imageUrl: Quas non inventore voluptas neque praesentium.
