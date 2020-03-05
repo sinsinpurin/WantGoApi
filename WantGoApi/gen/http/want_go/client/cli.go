@@ -16,15 +16,9 @@ import (
 // BuildGetCardInfoPayload builds the payload for the WantGo getCardInfo
 // endpoint from CLI flags.
 func BuildGetCardInfoPayload(wantGoGetCardInfoCardID string) (*wantgo.GetCardInfoPayload, error) {
-	var err error
-	var cardID int
+	var cardID string
 	{
-		var v int64
-		v, err = strconv.ParseInt(wantGoGetCardInfoCardID, 10, 64)
-		cardID = int(v)
-		if err != nil {
-			return nil, fmt.Errorf("invalid value for cardID, must be INT")
-		}
+		cardID = wantGoGetCardInfoCardID
 	}
 	payload := &wantgo.GetCardInfoPayload{
 		CardID: cardID,

@@ -38,19 +38,18 @@ var MethodNames = [5]string{"getSimpleCardList", "getCardInfo", "postCardInfo", 
 // GetCardInfoPayload is the payload type of the WantGo service getCardInfo
 // method.
 type GetCardInfoPayload struct {
-	// card id
-	CardID int
+	CardID string
 }
 
 // CardInfo is the result type of the WantGo service getCardInfo method.
 type CardInfo struct {
-	CardAuthor      *string
-	CardTitle       *string
-	CardDescription *string
+	CardAuthor      string
+	CardTitle       string
+	CardDescription string
 	Tags            []string
-	ImageURL        *string
-	LocationAddress *string
-	LocationURL     *string
+	ImageURL        string
+	LocationAddress string
+	LocationURL     string
 }
 
 // PostCardInfoPayload is the payload type of the WantGo service postCardInfo
@@ -62,9 +61,9 @@ type PostCardInfoPayload struct {
 	CardTitle       string
 	CardDescription string
 	Tags            []string
-	ImageURL        *string
-	LocationAddress *string
-	LocationURL     *string
+	ImageURL        string
+	LocationAddress string
+	LocationURL     string
 }
 
 // PutCardInfoPayload is the payload type of the WantGo service putCardInfo
@@ -76,9 +75,9 @@ type PutCardInfoPayload struct {
 	CardTitle       string
 	CardDescription string
 	Tags            []string
-	ImageURL        *string
-	LocationAddress *string
-	LocationURL     *string
+	ImageURL        string
+	LocationAddress string
+	LocationURL     string
 }
 
 // DeleteCardInfoPayload is the payload type of the WantGo service
@@ -89,8 +88,8 @@ type DeleteCardInfoPayload struct {
 }
 
 type SimpleCard struct {
-	CardID     *int
-	CardAuthor *string
-	CardTitle  *string
-	ImageURL   *string
+	CardID     int
+	CardAuthor string
+	CardTitle  string
+	ImageURL   string
 }

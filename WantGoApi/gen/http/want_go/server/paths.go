@@ -17,7 +17,7 @@ func GetSimpleCardListWantGoPath() string {
 }
 
 // GetCardInfoWantGoPath returns the URL path to the WantGo service getCardInfo HTTP endpoint.
-func GetCardInfoWantGoPath(cardID int) string {
+func GetCardInfoWantGoPath(cardID string) string {
 	return fmt.Sprintf("/card/%v", cardID)
 }
 

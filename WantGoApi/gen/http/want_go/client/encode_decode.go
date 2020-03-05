@@ -51,7 +51,7 @@ func DecodeGetSimpleCardListResponse(decoder func(*http.Response) goahttp.Decode
 			defer resp.Body.Close()
 		}
 		switch resp.StatusCode {
-		case http.StatusNoContent:
+		case http.StatusOK:
 			var (
 				body GetSimpleCardListResponseBody
 				err  error
@@ -60,7 +60,7 @@ func DecodeGetSimpleCardListResponse(decoder func(*http.Response) goahttp.Decode
 			if err != nil {
 				return nil, goahttp.ErrDecodingError("WantGo", "getSimpleCardList", err)
 			}
-			res := NewGetSimpleCardListSimpleCardNoContent(body)
+			res := NewGetSimpleCardListSimpleCardOK(body)
 			return res, nil
 		default:
 			body, _ := ioutil.ReadAll(resp.Body)
@@ -73,7 +73,7 @@ func DecodeGetSimpleCardListResponse(decoder func(*http.Response) goahttp.Decode
 // path set to call the "WantGo" service "getCardInfo" endpoint
 func (c *Client) BuildGetCardInfoRequest(ctx context.Context, v interface{}) (*http.Request, error) {
 	var (
-		cardID int
+		cardID string
 	)
 	{
 		p, ok := v.(*wantgo.GetCardInfoPayload)

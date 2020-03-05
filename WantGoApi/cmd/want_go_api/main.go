@@ -4,6 +4,7 @@ import (
 	wantgoapi "WantGoApi"
 	wantgo "WantGoApi/gen/want_go"
 	"context"
+	"database/sql"
 	"flag"
 	"fmt"
 	"log"
@@ -12,6 +13,8 @@ import (
 	"os/signal"
 	"strings"
 	"sync"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -34,12 +37,24 @@ func main() {
 		logger = log.New(os.Stderr, "[wantgoapi] ", log.Ltime)
 	}
 
+	var (
+		db *sql.DB
+	)
+	{
+		var err error
+		db, err = sql.Open("mysql", "root:Masaki19980929!@/WantGoDB")
+		if err != nil {
+			panic(err.Error())
+		}
+		defer db.Close()
+	}
+
 	// Initialize the services.
 	var (
 		wantGoSvc wantgo.Service
 	)
 	{
-		wantGoSvc = wantgoapi.NewWantGo(logger)
+		wantGoSvc = wantgoapi.NewWantGo(logger, db)
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services

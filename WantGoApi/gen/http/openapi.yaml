@@ -20,8 +20,8 @@ paths:
       summary: getSimpleCardList WantGo
       operationId: WantGo#getSimpleCardList
       responses:
-        "204":
-          description: No Content response.
+        "200":
+          description: OK response.
           schema:
             type: array
             items:
@@ -37,9 +37,8 @@ paths:
       parameters:
       - name: cardId
         in: path
-        description: card id
         required: true
-        type: integer
+        type: string
       responses:
         "200":
           description: OK response.
@@ -125,63 +124,71 @@ definitions:
     properties:
       cardAuthor:
         type: string
-        example: Saepe quaerat.
+        default: default
+        example: Odio officia aut cupiditate asperiores qui id.
       cardDescription:
         type: string
-        example: Maxime sint impedit omnis.
+        default: default
+        example: Ratione non voluptatem molestiae.
       cardTitle:
         type: string
-        example: Eos minima ab sit.
+        default: default
+        example: Consequatur id.
       imageUrl:
         type: string
-        example: Odio officia aut cupiditate asperiores qui id.
+        default: default
+        example: Est dolore.
       locationAddress:
         type: string
-        example: Consequatur id.
+        default: default
+        example: Error quia odit.
       locationUrl:
         type: string
-        example: Ratione non voluptatem molestiae.
+        default: default
+        example: Veniam aut sunt voluptatibus.
       tags:
         type: array
         items:
           type: string
-          example: Aut dolorum deleniti id et vero ut.
+          example: Et quisquam autem reiciendis at numquam.
         example:
-        - Nihil est earum rerum dignissimos qui.
-        - Esse non rem asperiores dolore omnis voluptas.
-        - Sequi est.
-        - Hic et aperiam temporibus eum qui.
+        - Corporis eaque.
+        - Vero libero qui dolorem.
+        - Earum quis dolorem quo eos adipisci unde.
+        - Unde corrupti ipsum aut.
     example:
-      cardAuthor: Et quisquam autem reiciendis at numquam.
-      cardDescription: Repudiandae earum quis dolorem quo eos.
-      cardTitle: Aliquid corporis eaque voluptate vero libero qui.
-      imageUrl: Consectetur voluptates nesciunt ut.
-      locationAddress: Molestias voluptatum.
-      locationUrl: Qui quod.
+      cardAuthor: Odit et placeat debitis consectetur.
+      cardDescription: Voluptatum voluptas qui quod aut.
+      cardTitle: Nesciunt ut aliquid.
+      imageUrl: Maxime est dicta.
+      locationAddress: Delectus sapiente maiores culpa et.
+      locationUrl: Qui dolores animi dolore et.
       tags:
-      - Eum unde corrupti.
-      - Aut aut est dolore temporibus.
-      - Quia odit et veniam.
-      - Sunt voluptatibus sit odit et placeat.
+      - Accusamus quam vitae magni asperiores ipsum accusantium.
+      - Officiis ut.
   simpleCardResponse:
     title: simpleCardResponse
     type: object
     properties:
       cardAuthor:
         type: string
-        example: Omnis sit aut suscipit nihil numquam.
+        default: default
+        example: Ad aut dolorum deleniti id et.
       cardId:
         type: integer
-        example: 1045841296031323956
+        default: 0
+        example: 6598837571395036910
         format: int64
       cardTitle:
         type: string
-        example: Ipsam mollitia et voluptatem.
+        default: default
+        example: Ut labore vel nihil est.
       imageUrl:
         type: string
-        example: Similique et cupiditate labore repudiandae et.
+        default: default
+        example: Rerum dignissimos.
     example:
-      cardAuthor: Non velit est repudiandae iure vel voluptatem.
-      cardId: 1907344422367774815
-      cardTitle: Dolore nemo non.
-      imageUrl: Quas non inventore voluptas neque praesentium.
+      cardAuthor: Esse non rem asperiores dolore omnis voluptas.
+      cardId: 324493412898009656
+      cardTitle: Sequi est.
+      imageUrl: Hic et aperiam temporibus eum qui.

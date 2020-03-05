@@ -48,7 +48,7 @@ func ParseEndpoint(
 		wantGoGetSimpleCardListFlags = flag.NewFlagSet("get-simple-card-list", flag.ExitOnError)
 
 		wantGoGetCardInfoFlags      = flag.NewFlagSet("get-card-info", flag.ExitOnError)
-		wantGoGetCardInfoCardIDFlag = wantGoGetCardInfoFlags.String("card-id", "REQUIRED", "card id")
+		wantGoGetCardInfoCardIDFlag = wantGoGetCardInfoFlags.String("card-id", "REQUIRED", "")
 
 		wantGoPostCardInfoFlags      = flag.NewFlagSet("post-card-info", flag.ExitOnError)
 		wantGoPostCardInfoBodyFlag   = wantGoPostCardInfoFlags.String("body", "REQUIRED", "")
@@ -195,13 +195,13 @@ Example:
 }
 
 func wantGoGetCardInfoUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] want-go get-card-info -card-id INT
+	fmt.Fprintf(os.Stderr, `%s [flags] want-go get-card-info -card-id STRING
 
 GetCardInfo implements getCardInfo.
-    -card-id INT: card id
+    -card-id STRING: 
 
 Example:
-    `+os.Args[0]+` want-go get-card-info --card-id 632388577362998555
+    `+os.Args[0]+` want-go get-card-info --card-id "In et dolor aut culpa amet consequatur."
 `, os.Args[0])
 }
 
@@ -213,7 +213,7 @@ PostCardInfo implements postCardInfo.
     -card-id INT: card id
 
 Example:
-    `+os.Args[0]+` want-go post-card-info --body "Temporibus fuga earum consequatur." --card-id 1318348071896719909
+    `+os.Args[0]+` want-go post-card-info --body "Similique et cupiditate labore repudiandae et." --card-id 7961823537002089878
 `, os.Args[0])
 }
 
@@ -225,7 +225,7 @@ PutCardInfo implements putCardInfo.
     -card-id INT: card id
 
 Example:
-    `+os.Args[0]+` want-go put-card-info --body "Aut magni qui." --card-id 2989322803840598962
+    `+os.Args[0]+` want-go put-card-info --body "Quidem eos minima ab sit eum." --card-id 8314951880641919166
 `, os.Args[0])
 }
 
@@ -236,6 +236,6 @@ DeleteCardInfo implements deleteCardInfo.
     -card-id INT: card id
 
 Example:
-    `+os.Args[0]+` want-go delete-card-info --card-id 3418574029554564223
+    `+os.Args[0]+` want-go delete-card-info --card-id 1407836864382774373
 `, os.Args[0])
 }

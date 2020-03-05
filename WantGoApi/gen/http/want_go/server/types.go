@@ -18,21 +18,21 @@ type GetSimpleCardListResponseBody []*SimpleCardResponse
 // GetCardInfoResponseBody is the type of the "WantGo" service "getCardInfo"
 // endpoint HTTP response body.
 type GetCardInfoResponseBody struct {
-	CardAuthor      *string  `form:"cardAuthor,omitempty" json:"cardAuthor,omitempty" xml:"cardAuthor,omitempty"`
-	CardTitle       *string  `form:"cardTitle,omitempty" json:"cardTitle,omitempty" xml:"cardTitle,omitempty"`
-	CardDescription *string  `form:"cardDescription,omitempty" json:"cardDescription,omitempty" xml:"cardDescription,omitempty"`
+	CardAuthor      string   `form:"cardAuthor,omitempty" json:"cardAuthor,omitempty" xml:"cardAuthor,omitempty"`
+	CardTitle       string   `form:"cardTitle,omitempty" json:"cardTitle,omitempty" xml:"cardTitle,omitempty"`
+	CardDescription string   `form:"cardDescription,omitempty" json:"cardDescription,omitempty" xml:"cardDescription,omitempty"`
 	Tags            []string `form:"tags,omitempty" json:"tags,omitempty" xml:"tags,omitempty"`
-	ImageURL        *string  `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
-	LocationAddress *string  `form:"locationAddress,omitempty" json:"locationAddress,omitempty" xml:"locationAddress,omitempty"`
-	LocationURL     *string  `form:"locationUrl,omitempty" json:"locationUrl,omitempty" xml:"locationUrl,omitempty"`
+	ImageURL        string   `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
+	LocationAddress string   `form:"locationAddress,omitempty" json:"locationAddress,omitempty" xml:"locationAddress,omitempty"`
+	LocationURL     string   `form:"locationUrl,omitempty" json:"locationUrl,omitempty" xml:"locationUrl,omitempty"`
 }
 
 // SimpleCardResponse is used to define fields on response body types.
 type SimpleCardResponse struct {
-	CardID     *int    `form:"cardId,omitempty" json:"cardId,omitempty" xml:"cardId,omitempty"`
-	CardAuthor *string `form:"cardAuthor,omitempty" json:"cardAuthor,omitempty" xml:"cardAuthor,omitempty"`
-	CardTitle  *string `form:"cardTitle,omitempty" json:"cardTitle,omitempty" xml:"cardTitle,omitempty"`
-	ImageURL   *string `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
+	CardID     int    `form:"cardId,omitempty" json:"cardId,omitempty" xml:"cardId,omitempty"`
+	CardAuthor string `form:"cardAuthor,omitempty" json:"cardAuthor,omitempty" xml:"cardAuthor,omitempty"`
+	CardTitle  string `form:"cardTitle,omitempty" json:"cardTitle,omitempty" xml:"cardTitle,omitempty"`
+	ImageURL   string `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
 }
 
 // NewGetSimpleCardListResponseBody builds the HTTP response body from the
@@ -71,7 +71,7 @@ func NewGetCardInfoResponseBody(res *wantgo.CardInfo) *GetCardInfoResponseBody {
 }
 
 // NewGetCardInfoPayload builds a WantGo service getCardInfo endpoint payload.
-func NewGetCardInfoPayload(cardID int) *wantgo.GetCardInfoPayload {
+func NewGetCardInfoPayload(cardID string) *wantgo.GetCardInfoPayload {
 	return &wantgo.GetCardInfoPayload{
 		CardID: cardID,
 	}

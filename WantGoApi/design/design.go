@@ -29,20 +29,22 @@ var _ = API("WantGoApi", func() {
 })
 
 var simpleCard = Type("simpleCard", func() {
-	Attribute("cardId", Int)
-	Attribute("cardAuthor", String)
-	Attribute("cardTitle", String)
-	Attribute("imageUrl", String)
+	Attribute("cardId", Int, func() { Default(0) })
+	Attribute("cardAuthor", String, func() { Default("default") })
+	Attribute("cardTitle", String, func() { Default("default") })
+	Attribute("imageUrl", String, func() { Default("default") })
+
 })
 
 var cardInfo = Type("cardInfo", func() {
-	Attribute("cardAuthor", String)
-	Attribute("cardTitle", String)
-	Attribute("cardDescription", String)
+	Attribute("cardAuthor", String, func() { Default("default") })
+	Attribute("cardTitle", String, func() { Default("default") })
+	Attribute("cardDescription", String, func() { Default("default") })
 	Attribute("tags", ArrayOf(String))
-	Attribute("imageUrl", String)
-	Attribute("locationAddress", String)
-	Attribute("locationUrl", String)
+	Attribute("imageUrl", String, func() { Default("default") })
+	Attribute("locationAddress", String, func() { Default("default") })
+	Attribute("locationUrl", String, func() { Default("default") })
+
 })
 
 var _ = Service("WantGo", func() {
@@ -50,19 +52,19 @@ var _ = Service("WantGo", func() {
 
 	Method("getSimpleCardList", func() {
 		Payload(func() {
-
 		})
 
 		Result(ArrayOf(simpleCard))
 
 		HTTP(func() {
 			GET("/card-list")
+			Response(StatusOK)
 		})
 	})
 
 	Method("getCardInfo", func() {
 		Payload(func() {
-			Field(1, "cardId", Int, "card id")
+			Field(1, "cardId", String)
 			Required("cardId")
 		})
 
@@ -70,6 +72,7 @@ var _ = Service("WantGo", func() {
 
 		HTTP(func() {
 			GET("/card/{cardId}")
+			Response(StatusOK)
 		})
 	})
 
@@ -85,7 +88,7 @@ var _ = Service("WantGo", func() {
 			Attribute("locationAddress", String)
 			Attribute("locationUrl", String)
 
-			Required("cardId", "cardAuthor", "cardTitle", "cardDescription")
+			Required("cardId", "cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
 		})
 
 		Result(Empty)
@@ -108,7 +111,7 @@ var _ = Service("WantGo", func() {
 			Attribute("locationAddress", String)
 			Attribute("locationUrl", String)
 
-			Required("cardId", "cardAuthor", "cardTitle", "cardDescription")
+			Required("cardId", "cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
 		})
 
 		Result(Empty)
