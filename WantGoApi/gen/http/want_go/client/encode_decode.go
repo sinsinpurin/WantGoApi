@@ -192,7 +192,7 @@ func DecodePostCardInfoResponse(decoder func(*http.Response) goahttp.Decoder, re
 // path set to call the "WantGo" service "putCardInfo" endpoint
 func (c *Client) BuildPutCardInfoRequest(ctx context.Context, v interface{}) (*http.Request, error) {
 	var (
-		cardID int
+		cardID string
 	)
 	{
 		p, ok := v.(*wantgo.PutCardInfoPayload)
@@ -221,7 +221,7 @@ func EncodePutCardInfoRequest(encoder func(*http.Request) goahttp.Encoder) func(
 		if !ok {
 			return goahttp.ErrInvalidType("WantGo", "putCardInfo", "*wantgo.PutCardInfoPayload", v)
 		}
-		body := p.CardAuthor
+		body := NewPutCardInfoRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
 			return goahttp.ErrEncodingError("WantGo", "putCardInfo", err)
 		}

@@ -92,12 +92,13 @@ var _ = Service("WantGo", func() {
 
 		HTTP(func() {
 			POST("/card")
+			Response(StatusOK)
 		})
 	})
 
 	Method("putCardInfo", func() {
 		Payload(func() {
-			Field(1, "cardId", Int, "card id")
+			Field(1, "cardId", String)
 
 			Attribute("cardAuthor", String)
 			Attribute("cardTitle", String)
@@ -114,6 +115,7 @@ var _ = Service("WantGo", func() {
 
 		HTTP(func() {
 			PUT("/card/{cardId}")
+			Response(StatusOK)
 		})
 	})
 
@@ -127,6 +129,7 @@ var _ = Service("WantGo", func() {
 
 		HTTP(func() {
 			DELETE("/card/{cardId}")
+			Response(StatusOK)
 		})
 	})
 

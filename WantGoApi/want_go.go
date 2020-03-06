@@ -63,7 +63,7 @@ func (s *wantGosrvc) GetCardInfo(ctx context.Context, p *wantgo.GetCardInfoPaylo
 func (s *wantGosrvc) PostCardInfo(ctx context.Context, p *wantgo.PostCardInfoPayload) (err error) {
 	s.logger.Println("wantGo.postCardInfo")
 
-	result, erro := s.db.Exec("INSERT INTO `WantGoDB`.`WantCard` (`cardAuthor`, `cardTitle`, `cardDescription`, `tags`, `imageUrl`, `locationAddress`, `locationUrl`) VALUES ( ? , ? , ? , ? , ? , ? , ? );",
+	_, erro := s.db.Exec("INSERT INTO `WantGoDB`.`WantCard` (`cardAuthor`, `cardTitle`, `cardDescription`, `tags`, `imageUrl`, `locationAddress`, `locationUrl`) VALUES ( ? , ? , ? , ? , ? , ? , ? );",
 		p.CardAuthor,
 		p.CardTitle,
 		p.CardDescription,
@@ -73,8 +73,6 @@ func (s *wantGosrvc) PostCardInfo(ctx context.Context, p *wantgo.PostCardInfoPay
 		p.LocationURL,
 	)
 
-	s.logger.Println(`INSERT INTO WantCard (cardAuthor, cardTitle, cardDescription, tags, imageUrl , locationAddress, locationUrl) VALUES (` + p.CardAuthor + ", " + p.CardTitle + ", " + p.CardDescription + ", " + stringsToString(p.Tags) + ", " + p.ImageURL + ", " + p.LocationAddress + ", " + p.LocationURL + ");")
-	log.Println(result)
 	if erro != nil {
 		log.Fatal(erro)
 	}
@@ -84,14 +82,33 @@ func (s *wantGosrvc) PostCardInfo(ctx context.Context, p *wantgo.PostCardInfoPay
 // PutCardInfo implements putCardInfo.
 func (s *wantGosrvc) PutCardInfo(ctx context.Context, p *wantgo.PutCardInfoPayload) (err error) {
 	s.logger.Print("wantGo.putCardInfo")
-	return
+
+	_, erro := s.db.Exec("UPDATE `WantGoDB`.`WantCard` SET `cardAuthor` = ? , `cardTitle` = ? , `cardDescription` = ? , `tags` = ? , `imageUrl` = ? , `locationAddress` = ? , `locationUrl` = ? WHERE `cardId` = ? ;",
+		p.CardAuthor,
+		p.CardTitle,
+		p.CardDescription,
+		stringsToString(p.Tags),
+		p.ImageURL,
+		p.LocationAddress,
+		p.LocationURL,
+		p.CardID,
+	)
+	s.logger.Println(erro)
+	if erro != nil {
+		log.Fatal(erro)
+	}
+	return nil
 }
 
 // DeleteCardInfo implements deleteCardInfo.
 func (s *wantGosrvc) DeleteCardInfo(ctx context.Context, p *wantgo.DeleteCardInfoPayload) (err error) {
 	s.logger.Print("wantGo.deleteCardInfo")
 	s.logger.Print(p.CardID)
-	return
+	_, err = s.db.Exec(`DELETE FROM WantCard WHERE cardId = ?`, p.CardID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return nil
 }
 
 //[]string to string

@@ -25,6 +25,18 @@ type PostCardInfoRequestBody struct {
 	LocationURL     *string  `form:"locationUrl,omitempty" json:"locationUrl,omitempty" xml:"locationUrl,omitempty"`
 }
 
+// PutCardInfoRequestBody is the type of the "WantGo" service "putCardInfo"
+// endpoint HTTP request body.
+type PutCardInfoRequestBody struct {
+	CardAuthor      *string  `form:"cardAuthor,omitempty" json:"cardAuthor,omitempty" xml:"cardAuthor,omitempty"`
+	CardTitle       *string  `form:"cardTitle,omitempty" json:"cardTitle,omitempty" xml:"cardTitle,omitempty"`
+	CardDescription *string  `form:"cardDescription,omitempty" json:"cardDescription,omitempty" xml:"cardDescription,omitempty"`
+	Tags            []string `form:"tags,omitempty" json:"tags,omitempty" xml:"tags,omitempty"`
+	ImageURL        *string  `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
+	LocationAddress *string  `form:"locationAddress,omitempty" json:"locationAddress,omitempty" xml:"locationAddress,omitempty"`
+	LocationURL     *string  `form:"locationUrl,omitempty" json:"locationUrl,omitempty" xml:"locationUrl,omitempty"`
+}
+
 // GetSimpleCardListResponseBody is the type of the "WantGo" service
 // "getSimpleCardList" endpoint HTTP response body.
 type GetSimpleCardListResponseBody []*SimpleCardResponse
@@ -109,13 +121,21 @@ func NewPostCardInfoPayload(body *PostCardInfoRequestBody) *wantgo.PostCardInfoP
 }
 
 // NewPutCardInfoPayload builds a WantGo service putCardInfo endpoint payload.
-func NewPutCardInfoPayload(body string, cardID int) *wantgo.PutCardInfoPayload {
-	v := body
-	res := &wantgo.PutCardInfoPayload{
-		CardAuthor: v,
+func NewPutCardInfoPayload(body *PutCardInfoRequestBody, cardID string) *wantgo.PutCardInfoPayload {
+	v := &wantgo.PutCardInfoPayload{
+		CardAuthor:      *body.CardAuthor,
+		CardTitle:       *body.CardTitle,
+		CardDescription: *body.CardDescription,
+		ImageURL:        *body.ImageURL,
+		LocationAddress: *body.LocationAddress,
+		LocationURL:     *body.LocationURL,
 	}
-	res.CardID = cardID
-	return res
+	v.Tags = make([]string, len(body.Tags))
+	for i, val := range body.Tags {
+		v.Tags[i] = val
+	}
+	v.CardID = cardID
+	return v
 }
 
 // NewDeleteCardInfoPayload builds a WantGo service deleteCardInfo endpoint
@@ -129,6 +149,33 @@ func NewDeleteCardInfoPayload(cardID int) *wantgo.DeleteCardInfoPayload {
 // ValidatePostCardInfoRequestBody runs the validations defined on
 // PostCardInfoRequestBody
 func ValidatePostCardInfoRequestBody(body *PostCardInfoRequestBody) (err error) {
+	if body.CardAuthor == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("cardAuthor", "body"))
+	}
+	if body.CardTitle == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("cardTitle", "body"))
+	}
+	if body.CardDescription == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("cardDescription", "body"))
+	}
+	if body.Tags == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
+	}
+	if body.ImageURL == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("imageUrl", "body"))
+	}
+	if body.LocationAddress == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("locationAddress", "body"))
+	}
+	if body.LocationURL == nil {
+		err = goa.MergeErrors(err, goa.MissingFieldError("locationUrl", "body"))
+	}
+	return
+}
+
+// ValidatePutCardInfoRequestBody runs the validations defined on
+// PutCardInfoRequestBody
+func ValidatePutCardInfoRequestBody(body *PutCardInfoRequestBody) (err error) {
 	if body.CardAuthor == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("cardAuthor", "body"))
 	}

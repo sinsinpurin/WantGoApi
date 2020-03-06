@@ -55,7 +55,7 @@ func ParseEndpoint(
 
 		wantGoPutCardInfoFlags      = flag.NewFlagSet("put-card-info", flag.ExitOnError)
 		wantGoPutCardInfoBodyFlag   = wantGoPutCardInfoFlags.String("body", "REQUIRED", "")
-		wantGoPutCardInfoCardIDFlag = wantGoPutCardInfoFlags.String("card-id", "REQUIRED", "card id")
+		wantGoPutCardInfoCardIDFlag = wantGoPutCardInfoFlags.String("card-id", "REQUIRED", "")
 
 		wantGoDeleteCardInfoFlags      = flag.NewFlagSet("delete-card-info", flag.ExitOnError)
 		wantGoDeleteCardInfoCardIDFlag = wantGoDeleteCardInfoFlags.String("card-id", "REQUIRED", "card id")
@@ -200,7 +200,7 @@ GetCardInfo implements getCardInfo.
     -card-id STRING: 
 
 Example:
-    `+os.Args[0]+` want-go get-card-info --card-id "In et dolor aut culpa amet consequatur."
+    `+os.Args[0]+` want-go get-card-info --card-id "Vel ab est odit voluptatem eaque."
 `, os.Args[0])
 }
 
@@ -212,31 +212,43 @@ PostCardInfo implements postCardInfo.
 
 Example:
     `+os.Args[0]+` want-go post-card-info --body '{
-      "cardAuthor": "At natus recusandae aut magni qui voluptate.",
-      "cardDescription": "Dignissimos ipsam mollitia et.",
-      "cardTitle": "Voluptatem sit omnis sit aut suscipit nihil.",
-      "imageUrl": "Saepe saepe quaerat quidem eos.",
-      "locationAddress": "Ab sit.",
+      "cardAuthor": "Quia similique et cupiditate labore repudiandae.",
+      "cardDescription": "Velit est.",
+      "cardTitle": "Et enim.",
+      "imageUrl": "Saepe quaerat.",
+      "locationAddress": "Eos minima ab sit.",
       "locationUrl": "Maxime sint impedit omnis.",
       "tags": [
-         "Similique et cupiditate labore repudiandae et.",
-         "Enim non velit est repudiandae iure vel.",
-         "Modi dolore nemo.",
-         "Ea quas non inventore voluptas neque."
+         "Vel voluptatem.",
+         "Dolore nemo non.",
+         "Quas non inventore voluptas neque praesentium."
       ]
    }'
 `, os.Args[0])
 }
 
 func wantGoPutCardInfoUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] want-go put-card-info -body STRING -card-id INT
+	fmt.Fprintf(os.Stderr, `%s [flags] want-go put-card-info -body JSON -card-id STRING
 
 PutCardInfo implements putCardInfo.
-    -body STRING: 
-    -card-id INT: card id
+    -body JSON: 
+    -card-id STRING: 
 
 Example:
-    `+os.Args[0]+` want-go put-card-info --body "Sequi est." --card-id 6103617526757874311
+    `+os.Args[0]+` want-go put-card-info --body '{
+      "cardAuthor": "Vel nihil est earum.",
+      "cardDescription": "Esse non rem asperiores dolore omnis voluptas.",
+      "cardTitle": "Dignissimos qui.",
+      "imageUrl": "Et quisquam autem reiciendis at numquam.",
+      "locationAddress": "Aliquid corporis eaque voluptate vero libero qui.",
+      "locationUrl": "Repudiandae earum quis dolorem quo eos.",
+      "tags": [
+         "Est consequatur hic et.",
+         "Temporibus eum qui nobis odio officia aut.",
+         "Asperiores qui id et consequatur id.",
+         "Ratione non voluptatem molestiae."
+      ]
+   }' --card-id "Unde eum unde corrupti ipsum."
 `, os.Args[0])
 }
 
@@ -247,6 +259,6 @@ DeleteCardInfo implements deleteCardInfo.
     -card-id INT: card id
 
 Example:
-    `+os.Args[0]+` want-go delete-card-info --card-id 5482000573351683035
+    `+os.Args[0]+` want-go delete-card-info --card-id 3608647236993748685
 `, os.Args[0])
 }
