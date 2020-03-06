@@ -44,7 +44,6 @@ var cardInfo = Type("cardInfo", func() {
 	Attribute("imageUrl", String, func() { Default("default") })
 	Attribute("locationAddress", String, func() { Default("default") })
 	Attribute("locationUrl", String, func() { Default("default") })
-
 })
 
 var _ = Service("WantGo", func() {
@@ -78,8 +77,6 @@ var _ = Service("WantGo", func() {
 
 	Method("postCardInfo", func() {
 		Payload(func() {
-			Field(1, "cardId", Int, "card id")
-
 			Attribute("cardAuthor", String)
 			Attribute("cardTitle", String)
 			Attribute("cardDescription", String)
@@ -88,14 +85,13 @@ var _ = Service("WantGo", func() {
 			Attribute("locationAddress", String)
 			Attribute("locationUrl", String)
 
-			Required("cardId", "cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
+			Required("cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
 		})
 
 		Result(Empty)
 
 		HTTP(func() {
-			POST("/card/{cardId}")
-			Body("cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
+			POST("/card")
 		})
 	})
 
@@ -118,7 +114,6 @@ var _ = Service("WantGo", func() {
 
 		HTTP(func() {
 			PUT("/card/{cardId}")
-			Body("cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
 		})
 	})
 

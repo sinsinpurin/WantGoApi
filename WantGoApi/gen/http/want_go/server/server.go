@@ -61,7 +61,7 @@ func New(
 		Mounts: []*MountPoint{
 			{"GetSimpleCardList", "GET", "/card-list"},
 			{"GetCardInfo", "GET", "/card/{cardId}"},
-			{"PostCardInfo", "POST", "/card/{cardId}"},
+			{"PostCardInfo", "POST", "/card"},
 			{"PutCardInfo", "PUT", "/card/{cardId}"},
 			{"DeleteCardInfo", "DELETE", "/card/{cardId}"},
 			{"./gen/http/openapi.json", "GET", "/openapi.json"},
@@ -206,7 +206,7 @@ func MountPostCardInfoHandler(mux goahttp.Muxer, h http.Handler) {
 			h.ServeHTTP(w, r)
 		}
 	}
-	mux.Handle("POST", "/card/{cardId}", f)
+	mux.Handle("POST", "/card", f)
 }
 
 // NewPostCardInfoHandler creates a HTTP handler which loads the HTTP request

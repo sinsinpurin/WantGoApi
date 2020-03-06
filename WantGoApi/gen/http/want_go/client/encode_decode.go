@@ -133,17 +133,7 @@ func DecodeGetCardInfoResponse(decoder func(*http.Response) goahttp.Decoder, res
 // BuildPostCardInfoRequest instantiates a HTTP request object with method and
 // path set to call the "WantGo" service "postCardInfo" endpoint
 func (c *Client) BuildPostCardInfoRequest(ctx context.Context, v interface{}) (*http.Request, error) {
-	var (
-		cardID int
-	)
-	{
-		p, ok := v.(*wantgo.PostCardInfoPayload)
-		if !ok {
-			return nil, goahttp.ErrInvalidType("WantGo", "postCardInfo", "*wantgo.PostCardInfoPayload", v)
-		}
-		cardID = p.CardID
-	}
-	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: PostCardInfoWantGoPath(cardID)}
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: PostCardInfoWantGoPath()}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
 		return nil, goahttp.ErrInvalidURL("WantGo", "postCardInfo", u.String(), err)
@@ -163,7 +153,7 @@ func EncodePostCardInfoRequest(encoder func(*http.Request) goahttp.Encoder) func
 		if !ok {
 			return goahttp.ErrInvalidType("WantGo", "postCardInfo", "*wantgo.PostCardInfoPayload", v)
 		}
-		body := p.CardAuthor
+		body := NewPostCardInfoRequestBody(p)
 		if err := encoder(req).Encode(&body); err != nil {
 			return goahttp.ErrEncodingError("WantGo", "postCardInfo", err)
 		}

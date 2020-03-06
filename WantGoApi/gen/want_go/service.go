@@ -55,8 +55,6 @@ type CardInfo struct {
 // PostCardInfoPayload is the payload type of the WantGo service postCardInfo
 // method.
 type PostCardInfoPayload struct {
-	// card id
-	CardID          int
 	CardAuthor      string
 	CardTitle       string
 	CardDescription string

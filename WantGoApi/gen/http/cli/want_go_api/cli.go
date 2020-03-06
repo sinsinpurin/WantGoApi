@@ -50,9 +50,8 @@ func ParseEndpoint(
 		wantGoGetCardInfoFlags      = flag.NewFlagSet("get-card-info", flag.ExitOnError)
 		wantGoGetCardInfoCardIDFlag = wantGoGetCardInfoFlags.String("card-id", "REQUIRED", "")
 
-		wantGoPostCardInfoFlags      = flag.NewFlagSet("post-card-info", flag.ExitOnError)
-		wantGoPostCardInfoBodyFlag   = wantGoPostCardInfoFlags.String("body", "REQUIRED", "")
-		wantGoPostCardInfoCardIDFlag = wantGoPostCardInfoFlags.String("card-id", "REQUIRED", "card id")
+		wantGoPostCardInfoFlags    = flag.NewFlagSet("post-card-info", flag.ExitOnError)
+		wantGoPostCardInfoBodyFlag = wantGoPostCardInfoFlags.String("body", "REQUIRED", "")
 
 		wantGoPutCardInfoFlags      = flag.NewFlagSet("put-card-info", flag.ExitOnError)
 		wantGoPutCardInfoBodyFlag   = wantGoPutCardInfoFlags.String("body", "REQUIRED", "")
@@ -150,7 +149,7 @@ func ParseEndpoint(
 				data, err = wantgoc.BuildGetCardInfoPayload(*wantGoGetCardInfoCardIDFlag)
 			case "post-card-info":
 				endpoint = c.PostCardInfo()
-				data, err = wantgoc.BuildPostCardInfoPayload(*wantGoPostCardInfoBodyFlag, *wantGoPostCardInfoCardIDFlag)
+				data, err = wantgoc.BuildPostCardInfoPayload(*wantGoPostCardInfoBodyFlag)
 			case "put-card-info":
 				endpoint = c.PutCardInfo()
 				data, err = wantgoc.BuildPutCardInfoPayload(*wantGoPutCardInfoBodyFlag, *wantGoPutCardInfoCardIDFlag)
@@ -206,14 +205,26 @@ Example:
 }
 
 func wantGoPostCardInfoUsage() {
-	fmt.Fprintf(os.Stderr, `%s [flags] want-go post-card-info -body STRING -card-id INT
+	fmt.Fprintf(os.Stderr, `%s [flags] want-go post-card-info -body JSON
 
 PostCardInfo implements postCardInfo.
-    -body STRING: 
-    -card-id INT: card id
+    -body JSON: 
 
 Example:
-    `+os.Args[0]+` want-go post-card-info --body "Similique et cupiditate labore repudiandae et." --card-id 7961823537002089878
+    `+os.Args[0]+` want-go post-card-info --body '{
+      "cardAuthor": "At natus recusandae aut magni qui voluptate.",
+      "cardDescription": "Dignissimos ipsam mollitia et.",
+      "cardTitle": "Voluptatem sit omnis sit aut suscipit nihil.",
+      "imageUrl": "Saepe saepe quaerat quidem eos.",
+      "locationAddress": "Ab sit.",
+      "locationUrl": "Maxime sint impedit omnis.",
+      "tags": [
+         "Similique et cupiditate labore repudiandae et.",
+         "Enim non velit est repudiandae iure vel.",
+         "Modi dolore nemo.",
+         "Ea quas non inventore voluptas neque."
+      ]
+   }'
 `, os.Args[0])
 }
 
@@ -225,7 +236,7 @@ PutCardInfo implements putCardInfo.
     -card-id INT: card id
 
 Example:
-    `+os.Args[0]+` want-go put-card-info --body "Quidem eos minima ab sit eum." --card-id 8314951880641919166
+    `+os.Args[0]+` want-go put-card-info --body "Sequi est." --card-id 6103617526757874311
 `, os.Args[0])
 }
 
@@ -236,6 +247,6 @@ DeleteCardInfo implements deleteCardInfo.
     -card-id INT: card id
 
 Example:
-    `+os.Args[0]+` want-go delete-card-info --card-id 1407836864382774373
+    `+os.Args[0]+` want-go delete-card-info --card-id 5482000573351683035
 `, os.Args[0])
 }

@@ -22,8 +22,8 @@ func GetCardInfoWantGoPath(cardID string) string {
 }
 
 // PostCardInfoWantGoPath returns the URL path to the WantGo service postCardInfo HTTP endpoint.
-func PostCardInfoWantGoPath(cardID int) string {
-	return fmt.Sprintf("/card/%v", cardID)
+func PostCardInfoWantGoPath() string {
+	return "/card"
 }
 
 // PutCardInfoWantGoPath returns the URL path to the WantGo service putCardInfo HTTP endpoint.

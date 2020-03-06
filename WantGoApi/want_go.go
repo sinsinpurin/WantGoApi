@@ -50,21 +50,35 @@ func (s *wantGosrvc) GetSimpleCardList(ctx context.Context) (res []*wantgo.Simpl
 func (s *wantGosrvc) GetCardInfo(ctx context.Context, p *wantgo.GetCardInfoPayload) (res *wantgo.CardInfo, err error) {
 	response := wantgo.CardInfo{}
 	s.logger.Print("wantGo.getCardInfo")
-
 	jsonTags := ``
 	err = s.db.QueryRow("SELECT cardAuthor, cardTitle, cardDescription, tags, imageUrl , locationAddress, locationUrl FROM WantCard WHERE cardId = "+p.CardID).Scan(&response.CardAuthor, &response.CardTitle, &response.CardDescription, &jsonTags, &response.ImageURL, &response.LocationAddress, &response.LocationURL)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	err = json.Unmarshal([]byte(jsonTags), &response.Tags)
 	return &response, nil
 }
 
 // PostCardInfo implements postCardInfo.
 func (s *wantGosrvc) PostCardInfo(ctx context.Context, p *wantgo.PostCardInfoPayload) (err error) {
-	s.logger.Print("wantGo.postCardInfo")
-	return
+	s.logger.Println("wantGo.postCardInfo")
+
+	result, erro := s.db.Exec("INSERT INTO `WantGoDB`.`WantCard` (`cardAuthor`, `cardTitle`, `cardDescription`, `tags`, `imageUrl`, `locationAddress`, `locationUrl`) VALUES ( ? , ? , ? , ? , ? , ? , ? );",
+		p.CardAuthor,
+		p.CardTitle,
+		p.CardDescription,
+		stringsToString(p.Tags),
+		p.ImageURL,
+		p.LocationAddress,
+		p.LocationURL,
+	)
+
+	s.logger.Println(`INSERT INTO WantCard (cardAuthor, cardTitle, cardDescription, tags, imageUrl , locationAddress, locationUrl) VALUES (` + p.CardAuthor + ", " + p.CardTitle + ", " + p.CardDescription + ", " + stringsToString(p.Tags) + ", " + p.ImageURL + ", " + p.LocationAddress + ", " + p.LocationURL + ");")
+	log.Println(result)
+	if erro != nil {
+		log.Fatal(erro)
+	}
+	return nil
 }
 
 // PutCardInfo implements putCardInfo.
@@ -78,4 +92,18 @@ func (s *wantGosrvc) DeleteCardInfo(ctx context.Context, p *wantgo.DeleteCardInf
 	s.logger.Print("wantGo.deleteCardInfo")
 	s.logger.Print(p.CardID)
 	return
+}
+
+//[]string to string
+func stringsToString(strs []string) string {
+	str := `[`
+	for i := 0; i < len(strs); i++ {
+		if i != len(strs)-1 {
+			str = str + `"` + strs[i] + `",`
+		} else {
+			str = str + `"` + strs[i] + `"`
+		}
+	}
+	str = str + `]`
+	return str
 }

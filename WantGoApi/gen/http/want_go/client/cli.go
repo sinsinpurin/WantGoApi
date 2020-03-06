@@ -9,8 +9,11 @@ package client
 
 import (
 	wantgo "WantGoApi/gen/want_go"
+	"encoding/json"
 	"fmt"
 	"strconv"
+
+	goa "goa.design/goa/v3/pkg"
 )
 
 // BuildGetCardInfoPayload builds the payload for the WantGo getCardInfo
@@ -28,27 +31,36 @@ func BuildGetCardInfoPayload(wantGoGetCardInfoCardID string) (*wantgo.GetCardInf
 
 // BuildPostCardInfoPayload builds the payload for the WantGo postCardInfo
 // endpoint from CLI flags.
-func BuildPostCardInfoPayload(wantGoPostCardInfoBody string, wantGoPostCardInfoCardID string) (*wantgo.PostCardInfoPayload, error) {
+func BuildPostCardInfoPayload(wantGoPostCardInfoBody string) (*wantgo.PostCardInfoPayload, error) {
 	var err error
-	var body string
+	var body PostCardInfoRequestBody
 	{
-		body = wantGoPostCardInfoBody
-	}
-	var cardID int
-	{
-		var v int64
-		v, err = strconv.ParseInt(wantGoPostCardInfoCardID, 10, 64)
-		cardID = int(v)
+		err = json.Unmarshal([]byte(wantGoPostCardInfoBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid value for cardID, must be INT")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"cardAuthor\": \"At natus recusandae aut magni qui voluptate.\",\n      \"cardDescription\": \"Dignissimos ipsam mollitia et.\",\n      \"cardTitle\": \"Voluptatem sit omnis sit aut suscipit nihil.\",\n      \"imageUrl\": \"Saepe saepe quaerat quidem eos.\",\n      \"locationAddress\": \"Ab sit.\",\n      \"locationUrl\": \"Maxime sint impedit omnis.\",\n      \"tags\": [\n         \"Similique et cupiditate labore repudiandae et.\",\n         \"Enim non velit est repudiandae iure vel.\",\n         \"Modi dolore nemo.\",\n         \"Ea quas non inventore voluptas neque.\"\n      ]\n   }'")
+		}
+		if body.Tags == nil {
+			err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
+		}
+		if err != nil {
+			return nil, err
 		}
 	}
-	v := body
-	res := &wantgo.PostCardInfoPayload{
-		CardAuthor: v,
+	v := &wantgo.PostCardInfoPayload{
+		CardAuthor:      body.CardAuthor,
+		CardTitle:       body.CardTitle,
+		CardDescription: body.CardDescription,
+		ImageURL:        body.ImageURL,
+		LocationAddress: body.LocationAddress,
+		LocationURL:     body.LocationURL,
 	}
-	res.CardID = cardID
-	return res, nil
+	if body.Tags != nil {
+		v.Tags = make([]string, len(body.Tags))
+		for i, val := range body.Tags {
+			v.Tags[i] = val
+		}
+	}
+	return v, nil
 }
 
 // BuildPutCardInfoPayload builds the payload for the WantGo putCardInfo

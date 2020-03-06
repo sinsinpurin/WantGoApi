@@ -13,6 +13,31 @@ produces:
 - application/xml
 - application/gob
 paths:
+  /card:
+    post:
+      tags:
+      - WantGo
+      summary: postCardInfo WantGo
+      operationId: WantGo#postCardInfo
+      parameters:
+      - name: PostCardInfoRequestBody
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/WantGoPostCardInfoRequestBody'
+          required:
+          - cardAuthor
+          - cardTitle
+          - cardDescription
+          - tags
+          - imageUrl
+          - locationAddress
+          - locationUrl
+      responses:
+        "200":
+          description: OK response.
+      schemes:
+      - http
   /card-list:
     get:
       tags:
@@ -67,27 +92,6 @@ paths:
           description: OK response.
       schemes:
       - http
-    post:
-      tags:
-      - WantGo
-      summary: postCardInfo WantGo
-      operationId: WantGo#postCardInfo
-      parameters:
-      - name: cardId
-        in: path
-        description: card id
-        required: true
-        type: integer
-      - name: string
-        in: body
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK response.
-      schemes:
-      - http
     delete:
       tags:
       - WantGo
@@ -125,47 +129,96 @@ definitions:
       cardAuthor:
         type: string
         default: default
-        example: Odio officia aut cupiditate asperiores qui id.
+        example: Unde eum unde corrupti ipsum.
       cardDescription:
         type: string
         default: default
-        example: Ratione non voluptatem molestiae.
+        example: Odit et.
       cardTitle:
         type: string
         default: default
-        example: Consequatur id.
+        example: Aut est dolore temporibus error.
       imageUrl:
         type: string
         default: default
-        example: Est dolore.
+        example: Quam vitae.
       locationAddress:
         type: string
         default: default
-        example: Error quia odit.
+        example: Asperiores ipsum accusantium aut.
       locationUrl:
         type: string
         default: default
-        example: Veniam aut sunt voluptatibus.
+        example: Ut voluptates maxime est dicta aliquam.
       tags:
         type: array
         items:
           type: string
-          example: Et quisquam autem reiciendis at numquam.
+          example: Aut sunt voluptatibus sit odit et.
         example:
-        - Corporis eaque.
-        - Vero libero qui dolorem.
-        - Earum quis dolorem quo eos adipisci unde.
-        - Unde corrupti ipsum aut.
+        - Consectetur voluptates nesciunt ut.
+        - Molestias voluptatum.
+        - Qui quod.
+        - Atque dolorem.
     example:
-      cardAuthor: Odit et placeat debitis consectetur.
-      cardDescription: Voluptatum voluptas qui quod aut.
-      cardTitle: Nesciunt ut aliquid.
-      imageUrl: Maxime est dicta.
-      locationAddress: Delectus sapiente maiores culpa et.
-      locationUrl: Qui dolores animi dolore et.
+      cardAuthor: Sapiente maiores culpa et iusto.
+      cardDescription: Quasi labore ratione laboriosam in illum et.
+      cardTitle: Dolores animi dolore et.
+      imageUrl: Consequatur consequatur.
+      locationAddress: Rerum culpa aut corporis voluptatem deleniti.
+      locationUrl: Sit nobis aliquam non delectus vel.
       tags:
-      - Accusamus quam vitae magni asperiores ipsum accusantium.
-      - Officiis ut.
+      - Asperiores quod tenetur sed et.
+      - Ab voluptas quia ut in.
+  WantGoPostCardInfoRequestBody:
+    title: WantGoPostCardInfoRequestBody
+    type: object
+    properties:
+      cardAuthor:
+        type: string
+        example: Quia sit repudiandae non porro totam sunt.
+      cardDescription:
+        type: string
+        example: Sed dignissimos est laudantium qui et.
+      cardTitle:
+        type: string
+        example: Repellendus dolor qui fugiat quae.
+      imageUrl:
+        type: string
+        example: Repellat cumque eos fugiat quidem.
+      locationAddress:
+        type: string
+        example: Quam saepe inventore.
+      locationUrl:
+        type: string
+        example: Aperiam necessitatibus harum fuga velit placeat.
+      tags:
+        type: array
+        items:
+          type: string
+          example: Ipsum quaerat enim est exercitationem vitae.
+        example:
+        - Minima voluptatem aut sit quam.
+        - Nulla odit placeat et ut debitis.
+        - Id non.
+    example:
+      cardAuthor: Voluptatem sit provident asperiores.
+      cardDescription: Ea dolorem eos assumenda molestiae libero eaque.
+      cardTitle: Earum autem quam.
+      imageUrl: Minima et doloremque iusto saepe qui nobis.
+      locationAddress: Vero ut ipsam sequi.
+      locationUrl: Repellendus voluptates qui totam harum natus accusantium.
+      tags:
+      - Labore rerum facilis reiciendis.
+      - Aut quis aut autem et sequi nisi.
+    required:
+    - cardAuthor
+    - cardTitle
+    - cardDescription
+    - tags
+    - imageUrl
+    - locationAddress
+    - locationUrl
   simpleCardResponse:
     title: simpleCardResponse
     type: object
@@ -173,22 +226,22 @@ definitions:
       cardAuthor:
         type: string
         default: default
-        example: Ad aut dolorum deleniti id et.
+        example: Temporibus eum qui nobis odio officia aut.
       cardId:
         type: integer
         default: 0
-        example: 6598837571395036910
+        example: 4983824263506323009
         format: int64
       cardTitle:
         type: string
         default: default
-        example: Ut labore vel nihil est.
+        example: Asperiores qui id et consequatur id.
       imageUrl:
         type: string
         default: default
-        example: Rerum dignissimos.
+        example: Ratione non voluptatem molestiae.
     example:
-      cardAuthor: Esse non rem asperiores dolore omnis voluptas.
-      cardId: 324493412898009656
-      cardTitle: Sequi est.
-      imageUrl: Hic et aperiam temporibus eum qui.
+      cardAuthor: Quisquam autem reiciendis at numquam numquam aliquid.
+      cardId: 7251069960888186147
+      cardTitle: Eaque voluptate vero libero qui.
+      imageUrl: Repudiandae earum quis dolorem quo eos.

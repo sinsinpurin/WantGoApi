@@ -11,6 +11,18 @@ import (
 	wantgo "WantGoApi/gen/want_go"
 )
 
+// PostCardInfoRequestBody is the type of the "WantGo" service "postCardInfo"
+// endpoint HTTP request body.
+type PostCardInfoRequestBody struct {
+	CardAuthor      string   `form:"cardAuthor" json:"cardAuthor" xml:"cardAuthor"`
+	CardTitle       string   `form:"cardTitle" json:"cardTitle" xml:"cardTitle"`
+	CardDescription string   `form:"cardDescription" json:"cardDescription" xml:"cardDescription"`
+	Tags            []string `form:"tags" json:"tags" xml:"tags"`
+	ImageURL        string   `form:"imageUrl" json:"imageUrl" xml:"imageUrl"`
+	LocationAddress string   `form:"locationAddress" json:"locationAddress" xml:"locationAddress"`
+	LocationURL     string   `form:"locationUrl" json:"locationUrl" xml:"locationUrl"`
+}
+
 // GetSimpleCardListResponseBody is the type of the "WantGo" service
 // "getSimpleCardList" endpoint HTTP response body.
 type GetSimpleCardListResponseBody []*SimpleCardResponse
@@ -33,6 +45,26 @@ type SimpleCardResponse struct {
 	CardAuthor *string `form:"cardAuthor,omitempty" json:"cardAuthor,omitempty" xml:"cardAuthor,omitempty"`
 	CardTitle  *string `form:"cardTitle,omitempty" json:"cardTitle,omitempty" xml:"cardTitle,omitempty"`
 	ImageURL   *string `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
+}
+
+// NewPostCardInfoRequestBody builds the HTTP request body from the payload of
+// the "postCardInfo" endpoint of the "WantGo" service.
+func NewPostCardInfoRequestBody(p *wantgo.PostCardInfoPayload) *PostCardInfoRequestBody {
+	body := &PostCardInfoRequestBody{
+		CardAuthor:      p.CardAuthor,
+		CardTitle:       p.CardTitle,
+		CardDescription: p.CardDescription,
+		ImageURL:        p.ImageURL,
+		LocationAddress: p.LocationAddress,
+		LocationURL:     p.LocationURL,
+	}
+	if p.Tags != nil {
+		body.Tags = make([]string, len(p.Tags))
+		for i, val := range p.Tags {
+			body.Tags[i] = val
+		}
+	}
+	return body
 }
 
 // NewGetSimpleCardListSimpleCardOK builds a "WantGo" service
