@@ -17,17 +17,17 @@ func GetSimpleCardListWantGoPath() string {
 }
 
 // GetCardInfoWantGoPath returns the URL path to the WantGo service getCardInfo HTTP endpoint.
-func GetCardInfoWantGoPath(cardID int) string {
+func GetCardInfoWantGoPath(cardID string) string {
 	return fmt.Sprintf("/card/%v", cardID)
 }
 
 // PostCardInfoWantGoPath returns the URL path to the WantGo service postCardInfo HTTP endpoint.
-func PostCardInfoWantGoPath(cardID int) string {
-	return fmt.Sprintf("/card/%v", cardID)
+func PostCardInfoWantGoPath() string {
+	return "/card"
 }
 
 // PutCardInfoWantGoPath returns the URL path to the WantGo service putCardInfo HTTP endpoint.
-func PutCardInfoWantGoPath(cardID int) string {
+func PutCardInfoWantGoPath(cardID string) string {
 	return fmt.Sprintf("/card/%v", cardID)
 }
 

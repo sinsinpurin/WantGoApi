@@ -25,7 +25,7 @@ func EncodeGetSimpleCardListResponse(encoder func(context.Context, http.Response
 		res := v.([]*wantgo.SimpleCard)
 		enc := encoder(ctx, w)
 		body := NewGetSimpleCardListResponseBody(res)
-		w.WriteHeader(http.StatusNoContent)
+		w.WriteHeader(http.StatusOK)
 		return enc.Encode(body)
 	}
 }
@@ -47,22 +47,11 @@ func EncodeGetCardInfoResponse(encoder func(context.Context, http.ResponseWriter
 func DecodeGetCardInfoRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			cardID int
-			err    error
+			cardID string
 
 			params = mux.Vars(r)
 		)
-		{
-			cardIDRaw := params["cardId"]
-			v, err2 := strconv.ParseInt(cardIDRaw, 10, strconv.IntSize)
-			if err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFieldTypeError("cardID", cardIDRaw, "integer"))
-			}
-			cardID = int(v)
-		}
-		if err != nil {
-			return nil, err
-		}
+		cardID = params["cardId"]
 		payload := NewGetCardInfoPayload(cardID)
 
 		return payload, nil
@@ -83,7 +72,7 @@ func EncodePostCardInfoResponse(encoder func(context.Context, http.ResponseWrite
 func DecodePostCardInfoRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body string
+			body PostCardInfoRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -93,24 +82,11 @@ func DecodePostCardInfoRequest(mux goahttp.Muxer, decoder func(*http.Request) go
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-
-		var (
-			cardID int
-
-			params = mux.Vars(r)
-		)
-		{
-			cardIDRaw := params["cardId"]
-			v, err2 := strconv.ParseInt(cardIDRaw, 10, strconv.IntSize)
-			if err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFieldTypeError("cardID", cardIDRaw, "integer"))
-			}
-			cardID = int(v)
-		}
+		err = ValidatePostCardInfoRequestBody(&body)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewPostCardInfoPayload(body, cardID)
+		payload := NewPostCardInfoPayload(&body)
 
 		return payload, nil
 	}
@@ -130,7 +106,7 @@ func EncodePutCardInfoResponse(encoder func(context.Context, http.ResponseWriter
 func DecodePutCardInfoRequest(mux goahttp.Muxer, decoder func(*http.Request) goahttp.Decoder) func(*http.Request) (interface{}, error) {
 	return func(r *http.Request) (interface{}, error) {
 		var (
-			body string
+			body PutCardInfoRequestBody
 			err  error
 		)
 		err = decoder(r).Decode(&body)
@@ -140,24 +116,18 @@ func DecodePutCardInfoRequest(mux goahttp.Muxer, decoder func(*http.Request) goa
 			}
 			return nil, goa.DecodePayloadError(err.Error())
 		}
-
-		var (
-			cardID int
-
-			params = mux.Vars(r)
-		)
-		{
-			cardIDRaw := params["cardId"]
-			v, err2 := strconv.ParseInt(cardIDRaw, 10, strconv.IntSize)
-			if err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFieldTypeError("cardID", cardIDRaw, "integer"))
-			}
-			cardID = int(v)
-		}
+		err = ValidatePutCardInfoRequestBody(&body)
 		if err != nil {
 			return nil, err
 		}
-		payload := NewPutCardInfoPayload(body, cardID)
+
+		var (
+			cardID string
+
+			params = mux.Vars(r)
+		)
+		cardID = params["cardId"]
+		payload := NewPutCardInfoPayload(&body, cardID)
 
 		return payload, nil
 	}

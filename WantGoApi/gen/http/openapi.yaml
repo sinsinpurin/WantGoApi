@@ -13,6 +13,31 @@ produces:
 - application/xml
 - application/gob
 paths:
+  /card:
+    post:
+      tags:
+      - WantGo
+      summary: postCardInfo WantGo
+      operationId: WantGo#postCardInfo
+      parameters:
+      - name: PostCardInfoRequestBody
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/WantGoPostCardInfoRequestBody'
+          required:
+          - cardAuthor
+          - cardTitle
+          - cardDescription
+          - tags
+          - imageUrl
+          - locationAddress
+          - locationUrl
+      responses:
+        "200":
+          description: OK response.
+      schemes:
+      - http
   /card-list:
     get:
       tags:
@@ -20,8 +45,8 @@ paths:
       summary: getSimpleCardList WantGo
       operationId: WantGo#getSimpleCardList
       responses:
-        "204":
-          description: No Content response.
+        "200":
+          description: OK response.
           schema:
             type: array
             items:
@@ -37,9 +62,8 @@ paths:
       parameters:
       - name: cardId
         in: path
-        description: card id
         required: true
-        type: integer
+        type: string
       responses:
         "200":
           description: OK response.
@@ -55,35 +79,21 @@ paths:
       parameters:
       - name: cardId
         in: path
-        description: card id
         required: true
-        type: integer
-      - name: string
+        type: string
+      - name: PutCardInfoRequestBody
         in: body
         required: true
         schema:
-          type: string
-      responses:
-        "200":
-          description: OK response.
-      schemes:
-      - http
-    post:
-      tags:
-      - WantGo
-      summary: postCardInfo WantGo
-      operationId: WantGo#postCardInfo
-      parameters:
-      - name: cardId
-        in: path
-        description: card id
-        required: true
-        type: integer
-      - name: string
-        in: body
-        required: true
-        schema:
-          type: string
+          $ref: '#/definitions/WantGoPutCardInfoRequestBody'
+          required:
+          - cardAuthor
+          - cardTitle
+          - cardDescription
+          - tags
+          - imageUrl
+          - locationAddress
+          - locationUrl
       responses:
         "200":
           description: OK response.
@@ -125,63 +135,171 @@ definitions:
     properties:
       cardAuthor:
         type: string
-        example: Saepe quaerat.
+        default: default
+        example: Ipsum accusantium aut officiis ut voluptates.
       cardDescription:
         type: string
-        example: Maxime sint impedit omnis.
+        default: default
+        example: Iusto qui dolores.
       cardTitle:
         type: string
-        example: Eos minima ab sit.
+        default: default
+        example: Est dicta aliquam delectus sapiente maiores culpa.
       imageUrl:
         type: string
-        example: Odio officia aut cupiditate asperiores qui id.
+        default: default
+        example: Consequatur consequatur.
       locationAddress:
         type: string
-        example: Consequatur id.
+        default: default
+        example: Rerum culpa aut corporis voluptatem deleniti.
       locationUrl:
         type: string
-        example: Ratione non voluptatem molestiae.
+        default: default
+        example: Sit nobis aliquam non delectus vel.
       tags:
         type: array
         items:
           type: string
-          example: Aut dolorum deleniti id et vero ut.
+          example: Dolore et sed quasi labore ratione laboriosam.
         example:
-        - Nihil est earum rerum dignissimos qui.
-        - Esse non rem asperiores dolore omnis voluptas.
-        - Sequi est.
-        - Hic et aperiam temporibus eum qui.
+        - Et totam nam asperiores quod tenetur sed.
+        - Cum ab.
+        - Quia ut in.
     example:
-      cardAuthor: Et quisquam autem reiciendis at numquam.
-      cardDescription: Repudiandae earum quis dolorem quo eos.
-      cardTitle: Aliquid corporis eaque voluptate vero libero qui.
-      imageUrl: Consectetur voluptates nesciunt ut.
-      locationAddress: Molestias voluptatum.
-      locationUrl: Qui quod.
+      cardAuthor: Quia sit repudiandae non porro totam sunt.
+      cardDescription: Sed dignissimos est laudantium qui et.
+      cardTitle: Repellendus dolor qui fugiat quae.
+      imageUrl: Aut sit quam voluptas.
+      locationAddress: Odit placeat et ut debitis.
+      locationUrl: Id non.
       tags:
-      - Eum unde corrupti.
-      - Aut aut est dolore temporibus.
-      - Quia odit et veniam.
-      - Sunt voluptatibus sit odit et placeat.
+      - Quaerat enim.
+      - Exercitationem vitae nemo in minima.
+  WantGoPostCardInfoRequestBody:
+    title: WantGoPostCardInfoRequestBody
+    type: object
+    properties:
+      cardAuthor:
+        type: string
+        example: Repellat cumque eos fugiat quidem.
+      cardDescription:
+        type: string
+        example: Aperiam necessitatibus harum fuga velit placeat.
+      cardTitle:
+        type: string
+        example: Quam saepe inventore.
+      imageUrl:
+        type: string
+        example: Quis aut autem et sequi nisi inventore.
+      locationAddress:
+        type: string
+        example: Et doloremque.
+      locationUrl:
+        type: string
+        example: Saepe qui.
+      tags:
+        type: array
+        items:
+          type: string
+          example: Voluptatem sit provident asperiores.
+        example:
+        - Autem quam impedit ea dolorem.
+        - Assumenda molestiae libero eaque ipsum quis.
+        - Rerum facilis reiciendis ad.
+    example:
+      cardAuthor: Explicabo vero ut ipsam.
+      cardDescription: Harum natus accusantium fugiat qui quidem rerum.
+      cardTitle: Quam repellendus voluptates qui.
+      imageUrl: Quas et molestias sit vel laboriosam omnis.
+      locationAddress: Eos et qui.
+      locationUrl: Dolore dolore necessitatibus necessitatibus et atque.
+      tags:
+      - Nihil dolore voluptatem enim molestiae consequatur illo.
+      - Explicabo facilis necessitatibus sed officiis pariatur hic.
+      - Esse corrupti quas.
+      - Et dignissimos sunt occaecati molestiae sunt.
+    required:
+    - cardAuthor
+    - cardTitle
+    - cardDescription
+    - tags
+    - imageUrl
+    - locationAddress
+    - locationUrl
+  WantGoPutCardInfoRequestBody:
+    title: WantGoPutCardInfoRequestBody
+    type: object
+    properties:
+      cardAuthor:
+        type: string
+        example: Magnam laborum aut quaerat.
+      cardDescription:
+        type: string
+        example: Et quae et.
+      cardTitle:
+        type: string
+        example: Qui ipsam recusandae eaque ut.
+      imageUrl:
+        type: string
+        example: Quia impedit possimus tempora in qui.
+      locationAddress:
+        type: string
+        example: Maxime ducimus molestias.
+      locationUrl:
+        type: string
+        example: Consequatur sapiente maiores minus eaque ullam.
+      tags:
+        type: array
+        items:
+          type: string
+          example: Rerum ut soluta aliquid facere consequuntur.
+        example:
+        - Quia dignissimos.
+        - Similique voluptatem eveniet.
+        - Molestiae sit dolorum.
+    example:
+      cardAuthor: Eos dolorum.
+      cardDescription: Voluptatem laudantium qui beatae.
+      cardTitle: Voluptatum libero non sit minima.
+      imageUrl: Porro ipsam praesentium.
+      locationAddress: Molestiae dolores autem ab nihil vel.
+      locationUrl: Culpa vel dignissimos soluta.
+      tags:
+      - Est quis magni et autem blanditiis.
+      - Est ipsam vel dolor et tempore.
+      - Ipsum nemo aut optio cumque.
+    required:
+    - cardAuthor
+    - cardTitle
+    - cardDescription
+    - tags
+    - imageUrl
+    - locationAddress
+    - locationUrl
   simpleCardResponse:
     title: simpleCardResponse
     type: object
     properties:
       cardAuthor:
         type: string
-        example: Omnis sit aut suscipit nihil numquam.
+        default: default
+        example: Temporibus error quia.
       cardId:
         type: integer
-        example: 1045841296031323956
+        default: 0
+        example: 490024451432317110
         format: int64
       cardTitle:
         type: string
-        example: Ipsam mollitia et voluptatem.
+        default: default
+        example: Et veniam aut sunt voluptatibus sit odit.
       imageUrl:
         type: string
-        example: Similique et cupiditate labore repudiandae et.
+        default: default
+        example: Placeat debitis consectetur.
     example:
-      cardAuthor: Non velit est repudiandae iure vel voluptatem.
-      cardId: 1907344422367774815
-      cardTitle: Dolore nemo non.
-      imageUrl: Quas non inventore voluptas neque praesentium.
+      cardAuthor: Ut aliquid.
+      cardId: 7211594474486280141
+      cardTitle: Voluptatum voluptas qui quod aut.
+      imageUrl: Dolorem accusamus quam vitae magni.

@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 
+	_ "github.com/go-sql-driver/mysql"
 	goa "goa.design/goa/v3/pkg"
 )
 
@@ -21,6 +22,7 @@ func main() {
 		vF       = flag.Bool("v", false, "Print request and response details")
 		timeoutF = flag.Int("timeout", 30, "Maximum number of seconds to wait for response")
 	)
+
 	flag.Usage = usage
 	flag.Parse()
 	var (

@@ -9,22 +9,19 @@ package client
 
 import (
 	wantgo "WantGoApi/gen/want_go"
+	"encoding/json"
 	"fmt"
 	"strconv"
+
+	goa "goa.design/goa/v3/pkg"
 )
 
 // BuildGetCardInfoPayload builds the payload for the WantGo getCardInfo
 // endpoint from CLI flags.
 func BuildGetCardInfoPayload(wantGoGetCardInfoCardID string) (*wantgo.GetCardInfoPayload, error) {
-	var err error
-	var cardID int
+	var cardID string
 	{
-		var v int64
-		v, err = strconv.ParseInt(wantGoGetCardInfoCardID, 10, 64)
-		cardID = int(v)
-		if err != nil {
-			return nil, fmt.Errorf("invalid value for cardID, must be INT")
-		}
+		cardID = wantGoGetCardInfoCardID
 	}
 	payload := &wantgo.GetCardInfoPayload{
 		CardID: cardID,
@@ -34,52 +31,75 @@ func BuildGetCardInfoPayload(wantGoGetCardInfoCardID string) (*wantgo.GetCardInf
 
 // BuildPostCardInfoPayload builds the payload for the WantGo postCardInfo
 // endpoint from CLI flags.
-func BuildPostCardInfoPayload(wantGoPostCardInfoBody string, wantGoPostCardInfoCardID string) (*wantgo.PostCardInfoPayload, error) {
+func BuildPostCardInfoPayload(wantGoPostCardInfoBody string) (*wantgo.PostCardInfoPayload, error) {
 	var err error
-	var body string
+	var body PostCardInfoRequestBody
 	{
-		body = wantGoPostCardInfoBody
-	}
-	var cardID int
-	{
-		var v int64
-		v, err = strconv.ParseInt(wantGoPostCardInfoCardID, 10, 64)
-		cardID = int(v)
+		err = json.Unmarshal([]byte(wantGoPostCardInfoBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid value for cardID, must be INT")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"cardAuthor\": \"Quia similique et cupiditate labore repudiandae.\",\n      \"cardDescription\": \"Velit est.\",\n      \"cardTitle\": \"Et enim.\",\n      \"imageUrl\": \"Saepe quaerat.\",\n      \"locationAddress\": \"Eos minima ab sit.\",\n      \"locationUrl\": \"Maxime sint impedit omnis.\",\n      \"tags\": [\n         \"Vel voluptatem.\",\n         \"Dolore nemo non.\",\n         \"Quas non inventore voluptas neque praesentium.\"\n      ]\n   }'")
+		}
+		if body.Tags == nil {
+			err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
+		}
+		if err != nil {
+			return nil, err
 		}
 	}
-	v := body
-	res := &wantgo.PostCardInfoPayload{
-		CardAuthor: v,
+	v := &wantgo.PostCardInfoPayload{
+		CardAuthor:      body.CardAuthor,
+		CardTitle:       body.CardTitle,
+		CardDescription: body.CardDescription,
+		ImageURL:        body.ImageURL,
+		LocationAddress: body.LocationAddress,
+		LocationURL:     body.LocationURL,
 	}
-	res.CardID = cardID
-	return res, nil
+	if body.Tags != nil {
+		v.Tags = make([]string, len(body.Tags))
+		for i, val := range body.Tags {
+			v.Tags[i] = val
+		}
+	}
+	return v, nil
 }
 
 // BuildPutCardInfoPayload builds the payload for the WantGo putCardInfo
 // endpoint from CLI flags.
 func BuildPutCardInfoPayload(wantGoPutCardInfoBody string, wantGoPutCardInfoCardID string) (*wantgo.PutCardInfoPayload, error) {
 	var err error
-	var body string
+	var body PutCardInfoRequestBody
 	{
-		body = wantGoPutCardInfoBody
-	}
-	var cardID int
-	{
-		var v int64
-		v, err = strconv.ParseInt(wantGoPutCardInfoCardID, 10, 64)
-		cardID = int(v)
+		err = json.Unmarshal([]byte(wantGoPutCardInfoBody), &body)
 		if err != nil {
-			return nil, fmt.Errorf("invalid value for cardID, must be INT")
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"cardAuthor\": \"Vel nihil est earum.\",\n      \"cardDescription\": \"Esse non rem asperiores dolore omnis voluptas.\",\n      \"cardTitle\": \"Dignissimos qui.\",\n      \"imageUrl\": \"Et quisquam autem reiciendis at numquam.\",\n      \"locationAddress\": \"Aliquid corporis eaque voluptate vero libero qui.\",\n      \"locationUrl\": \"Repudiandae earum quis dolorem quo eos.\",\n      \"tags\": [\n         \"Est consequatur hic et.\",\n         \"Temporibus eum qui nobis odio officia aut.\",\n         \"Asperiores qui id et consequatur id.\",\n         \"Ratione non voluptatem molestiae.\"\n      ]\n   }'")
+		}
+		if body.Tags == nil {
+			err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
+		}
+		if err != nil {
+			return nil, err
 		}
 	}
-	v := body
-	res := &wantgo.PutCardInfoPayload{
-		CardAuthor: v,
+	var cardID string
+	{
+		cardID = wantGoPutCardInfoCardID
 	}
-	res.CardID = cardID
-	return res, nil
+	v := &wantgo.PutCardInfoPayload{
+		CardAuthor:      body.CardAuthor,
+		CardTitle:       body.CardTitle,
+		CardDescription: body.CardDescription,
+		ImageURL:        body.ImageURL,
+		LocationAddress: body.LocationAddress,
+		LocationURL:     body.LocationURL,
+	}
+	if body.Tags != nil {
+		v.Tags = make([]string, len(body.Tags))
+		for i, val := range body.Tags {
+			v.Tags[i] = val
+		}
+	}
+	v.CardID = cardID
+	return v, nil
 }
 
 // BuildDeleteCardInfoPayload builds the payload for the WantGo deleteCardInfo
