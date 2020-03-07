@@ -8,6 +8,7 @@ require (
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	goa.design/goa/v3 v3.0.10
+	goa.design/plugins/v3 v3.0.10
 	golang.org/x/mod v0.2.0 // indirect
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
 	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
