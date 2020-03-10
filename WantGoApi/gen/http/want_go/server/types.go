@@ -109,13 +109,30 @@ func NewPostCardInfoPayload(body *PostCardInfoRequestBody) *wantgo.PostCardInfoP
 		CardAuthor:      *body.CardAuthor,
 		CardTitle:       *body.CardTitle,
 		CardDescription: *body.CardDescription,
-		ImageURL:        *body.ImageURL,
-		LocationAddress: *body.LocationAddress,
-		LocationURL:     *body.LocationURL,
 	}
-	v.Tags = make([]string, len(body.Tags))
-	for i, val := range body.Tags {
-		v.Tags[i] = val
+	if body.ImageURL != nil {
+		v.ImageURL = *body.ImageURL
+	}
+	if body.LocationAddress != nil {
+		v.LocationAddress = *body.LocationAddress
+	}
+	if body.LocationURL != nil {
+		v.LocationURL = *body.LocationURL
+	}
+	if body.Tags != nil {
+		v.Tags = make([]string, len(body.Tags))
+		for i, val := range body.Tags {
+			v.Tags[i] = val
+		}
+	}
+	if body.ImageURL == nil {
+		v.ImageURL = "default"
+	}
+	if body.LocationAddress == nil {
+		v.LocationAddress = "default"
+	}
+	if body.LocationURL == nil {
+		v.LocationURL = "default"
 	}
 	return v
 }
@@ -126,13 +143,30 @@ func NewPutCardInfoPayload(body *PutCardInfoRequestBody, cardID string) *wantgo.
 		CardAuthor:      *body.CardAuthor,
 		CardTitle:       *body.CardTitle,
 		CardDescription: *body.CardDescription,
-		ImageURL:        *body.ImageURL,
-		LocationAddress: *body.LocationAddress,
-		LocationURL:     *body.LocationURL,
 	}
-	v.Tags = make([]string, len(body.Tags))
-	for i, val := range body.Tags {
-		v.Tags[i] = val
+	if body.ImageURL != nil {
+		v.ImageURL = *body.ImageURL
+	}
+	if body.LocationAddress != nil {
+		v.LocationAddress = *body.LocationAddress
+	}
+	if body.LocationURL != nil {
+		v.LocationURL = *body.LocationURL
+	}
+	if body.Tags != nil {
+		v.Tags = make([]string, len(body.Tags))
+		for i, val := range body.Tags {
+			v.Tags[i] = val
+		}
+	}
+	if body.ImageURL == nil {
+		v.ImageURL = "default"
+	}
+	if body.LocationAddress == nil {
+		v.LocationAddress = "default"
+	}
+	if body.LocationURL == nil {
+		v.LocationURL = "default"
 	}
 	v.CardID = cardID
 	return v
@@ -158,18 +192,6 @@ func ValidatePostCardInfoRequestBody(body *PostCardInfoRequestBody) (err error) 
 	if body.CardDescription == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("cardDescription", "body"))
 	}
-	if body.Tags == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
-	}
-	if body.ImageURL == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("imageUrl", "body"))
-	}
-	if body.LocationAddress == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("locationAddress", "body"))
-	}
-	if body.LocationURL == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("locationUrl", "body"))
-	}
 	return
 }
 
@@ -184,18 +206,6 @@ func ValidatePutCardInfoRequestBody(body *PutCardInfoRequestBody) (err error) {
 	}
 	if body.CardDescription == nil {
 		err = goa.MergeErrors(err, goa.MissingFieldError("cardDescription", "body"))
-	}
-	if body.Tags == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
-	}
-	if body.ImageURL == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("imageUrl", "body"))
-	}
-	if body.LocationAddress == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("locationAddress", "body"))
-	}
-	if body.LocationURL == nil {
-		err = goa.MergeErrors(err, goa.MissingFieldError("locationUrl", "body"))
 	}
 	return
 }

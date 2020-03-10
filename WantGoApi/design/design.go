@@ -87,17 +87,18 @@ var _ = Service("WantGo", func() {
 			Attribute("cardTitle", String)
 			Attribute("cardDescription", String)
 			Attribute("tags", ArrayOf(String))
-			Attribute("imageUrl", String)
-			Attribute("locationAddress", String)
-			Attribute("locationUrl", String)
+			Attribute("imageUrl", String, func() { Default("default") })
+			Attribute("locationAddress", String, func() { Default("default") })
+			Attribute("locationUrl", String, func() { Default("default") })
 
-			Required("cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
+			Required("cardAuthor", "cardTitle", "cardDescription")
 		})
 
 		Result(Empty)
 
 		HTTP(func() {
 			POST("/card")
+
 			Response(StatusOK)
 		})
 	})
@@ -110,17 +111,18 @@ var _ = Service("WantGo", func() {
 			Attribute("cardTitle", String)
 			Attribute("cardDescription", String)
 			Attribute("tags", ArrayOf(String))
-			Attribute("imageUrl", String)
-			Attribute("locationAddress", String)
-			Attribute("locationUrl", String)
+			Attribute("imageUrl", String, func() { Default("default") })
+			Attribute("locationAddress", String, func() { Default("default") })
+			Attribute("locationUrl", String, func() { Default("default") })
 
-			Required("cardId", "cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl")
+			Required("cardId", "cardAuthor", "cardTitle", "cardDescription")
 		})
 
 		Result(Empty)
 
 		HTTP(func() {
 			PUT("/card/{cardId}")
+
 			Response(StatusOK)
 		})
 	})

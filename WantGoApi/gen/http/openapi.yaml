@@ -29,10 +29,6 @@ paths:
           - cardAuthor
           - cardTitle
           - cardDescription
-          - tags
-          - imageUrl
-          - locationAddress
-          - locationUrl
       responses:
         "200":
           description: OK response.
@@ -90,10 +86,6 @@ paths:
           - cardAuthor
           - cardTitle
           - cardDescription
-          - tags
-          - imageUrl
-          - locationAddress
-          - locationUrl
       responses:
         "200":
           description: OK response.
@@ -191,12 +183,15 @@ definitions:
         example: Quam saepe inventore.
       imageUrl:
         type: string
+        default: default
         example: Quis aut autem et sequi nisi inventore.
       locationAddress:
         type: string
+        default: default
         example: Et doloremque.
       locationUrl:
         type: string
+        default: default
         example: Saepe qui.
       tags:
         type: array
@@ -223,10 +218,6 @@ definitions:
     - cardAuthor
     - cardTitle
     - cardDescription
-    - tags
-    - imageUrl
-    - locationAddress
-    - locationUrl
   WantGoPutCardInfoRequestBody:
     title: WantGoPutCardInfoRequestBody
     type: object
@@ -242,12 +233,15 @@ definitions:
         example: Qui ipsam recusandae eaque ut.
       imageUrl:
         type: string
+        default: default
         example: Quia impedit possimus tempora in qui.
       locationAddress:
         type: string
+        default: default
         example: Maxime ducimus molestias.
       locationUrl:
         type: string
+        default: default
         example: Consequatur sapiente maiores minus eaque ullam.
       tags:
         type: array
@@ -273,10 +267,6 @@ definitions:
     - cardAuthor
     - cardTitle
     - cardDescription
-    - tags
-    - imageUrl
-    - locationAddress
-    - locationUrl
   simpleCardResponse:
     title: simpleCardResponse
     type: object

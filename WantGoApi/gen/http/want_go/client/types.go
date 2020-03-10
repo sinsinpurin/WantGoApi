@@ -17,10 +17,10 @@ type PostCardInfoRequestBody struct {
 	CardAuthor      string   `form:"cardAuthor" json:"cardAuthor" xml:"cardAuthor"`
 	CardTitle       string   `form:"cardTitle" json:"cardTitle" xml:"cardTitle"`
 	CardDescription string   `form:"cardDescription" json:"cardDescription" xml:"cardDescription"`
-	Tags            []string `form:"tags" json:"tags" xml:"tags"`
-	ImageURL        string   `form:"imageUrl" json:"imageUrl" xml:"imageUrl"`
-	LocationAddress string   `form:"locationAddress" json:"locationAddress" xml:"locationAddress"`
-	LocationURL     string   `form:"locationUrl" json:"locationUrl" xml:"locationUrl"`
+	Tags            []string `form:"tags,omitempty" json:"tags,omitempty" xml:"tags,omitempty"`
+	ImageURL        string   `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
+	LocationAddress string   `form:"locationAddress,omitempty" json:"locationAddress,omitempty" xml:"locationAddress,omitempty"`
+	LocationURL     string   `form:"locationUrl,omitempty" json:"locationUrl,omitempty" xml:"locationUrl,omitempty"`
 }
 
 // PutCardInfoRequestBody is the type of the "WantGo" service "putCardInfo"
@@ -29,10 +29,10 @@ type PutCardInfoRequestBody struct {
 	CardAuthor      string   `form:"cardAuthor" json:"cardAuthor" xml:"cardAuthor"`
 	CardTitle       string   `form:"cardTitle" json:"cardTitle" xml:"cardTitle"`
 	CardDescription string   `form:"cardDescription" json:"cardDescription" xml:"cardDescription"`
-	Tags            []string `form:"tags" json:"tags" xml:"tags"`
-	ImageURL        string   `form:"imageUrl" json:"imageUrl" xml:"imageUrl"`
-	LocationAddress string   `form:"locationAddress" json:"locationAddress" xml:"locationAddress"`
-	LocationURL     string   `form:"locationUrl" json:"locationUrl" xml:"locationUrl"`
+	Tags            []string `form:"tags,omitempty" json:"tags,omitempty" xml:"tags,omitempty"`
+	ImageURL        string   `form:"imageUrl,omitempty" json:"imageUrl,omitempty" xml:"imageUrl,omitempty"`
+	LocationAddress string   `form:"locationAddress,omitempty" json:"locationAddress,omitempty" xml:"locationAddress,omitempty"`
+	LocationURL     string   `form:"locationUrl,omitempty" json:"locationUrl,omitempty" xml:"locationUrl,omitempty"`
 }
 
 // GetSimpleCardListResponseBody is the type of the "WantGo" service

@@ -12,8 +12,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
-
-	goa "goa.design/goa/v3/pkg"
 )
 
 // BuildGetCardInfoPayload builds the payload for the WantGo getCardInfo
@@ -38,12 +36,6 @@ func BuildPostCardInfoPayload(wantGoPostCardInfoBody string) (*wantgo.PostCardIn
 		err = json.Unmarshal([]byte(wantGoPostCardInfoBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"cardAuthor\": \"Quia similique et cupiditate labore repudiandae.\",\n      \"cardDescription\": \"Velit est.\",\n      \"cardTitle\": \"Et enim.\",\n      \"imageUrl\": \"Saepe quaerat.\",\n      \"locationAddress\": \"Eos minima ab sit.\",\n      \"locationUrl\": \"Maxime sint impedit omnis.\",\n      \"tags\": [\n         \"Vel voluptatem.\",\n         \"Dolore nemo non.\",\n         \"Quas non inventore voluptas neque praesentium.\"\n      ]\n   }'")
-		}
-		if body.Tags == nil {
-			err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
-		}
-		if err != nil {
-			return nil, err
 		}
 	}
 	v := &wantgo.PostCardInfoPayload{
@@ -72,12 +64,6 @@ func BuildPutCardInfoPayload(wantGoPutCardInfoBody string, wantGoPutCardInfoCard
 		err = json.Unmarshal([]byte(wantGoPutCardInfoBody), &body)
 		if err != nil {
 			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"cardAuthor\": \"Vel nihil est earum.\",\n      \"cardDescription\": \"Esse non rem asperiores dolore omnis voluptas.\",\n      \"cardTitle\": \"Dignissimos qui.\",\n      \"imageUrl\": \"Et quisquam autem reiciendis at numquam.\",\n      \"locationAddress\": \"Aliquid corporis eaque voluptate vero libero qui.\",\n      \"locationUrl\": \"Repudiandae earum quis dolorem quo eos.\",\n      \"tags\": [\n         \"Est consequatur hic et.\",\n         \"Temporibus eum qui nobis odio officia aut.\",\n         \"Asperiores qui id et consequatur id.\",\n         \"Ratione non voluptatem molestiae.\"\n      ]\n   }'")
-		}
-		if body.Tags == nil {
-			err = goa.MergeErrors(err, goa.MissingFieldError("tags", "body"))
-		}
-		if err != nil {
-			return nil, err
 		}
 	}
 	var cardID string
