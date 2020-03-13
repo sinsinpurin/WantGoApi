@@ -15,7 +15,6 @@ import (
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
-	"goa.design/goa"
 )
 
 func main() {
@@ -119,22 +118,4 @@ func main() {
 
 	wg.Wait()
 	logger.Println("exited")
-}
-
-// ErrorLogger は、指定されたロガーを使用してエラーを記録するエンドポイントミドルウェアです。
-// すべてのログエントリは、指定されたプレフィックスで始まります。
-func ErrorLogger(l *log.Logger, prefix string) func(goa.Endpoint) goa.Endpoint {
-	return func(e goa.Endpoint) goa.Endpoint {
-		// Goa エンドポイント自体が関数です。
-		return goa.Endpoint(func(ctx context.Context, req interface{}) (interface{}, error) {
-			// オリジナルのエンドポイント関数を呼び出します。
-			res, err := e(ctx, req)
-			// 何かエラーがあれば記録する。
-			if err != nil {
-				l.Printf("%s: %s", prefix, err.Error())
-			}
-			// エンドポイントの結果を返します。
-			return res, err
-		})
-	}
 }
