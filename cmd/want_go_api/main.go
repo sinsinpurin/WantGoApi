@@ -42,7 +42,7 @@ func main() {
 	)
 	{
 		var err error
-		db, err = sql.Open("mysql", "root:Masaki19980929!@/WantGoDB")
+		db, err = sql.Open("postgres", "user=rxhxfpnzcqbssl passward=6ef26778ae7ae04a7ca5392272505eafba6df47f8bd63a2f8d98e6fad1f9683b host=ec2-54-152-175-141.compute-1.amazonaws.com port=5432 dbname=dacs3r0n7hnrmp")
 		if err != nil {
 			panic(err.Error())
 		}
