@@ -120,6 +120,7 @@ paths:
             type: file
       schemes:
       - http
+      - https
 definitions:
   WantGoGetCardInfoResponseBody:
     title: WantGoGetCardInfoResponseBody

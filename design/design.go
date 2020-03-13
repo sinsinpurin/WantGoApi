@@ -14,18 +14,11 @@ var _ = API("WantGoApi", func() {
 			URI("http://localhost:8081")
 		})
 		// production host
-		// Host("production", func() {
-		//     Description("Production hosts.")
-		//     // URIs can be parameterized using {param} notation.
-		//     URI("https://{version}.goa.design/calc")
-
-		//     // Variable describes a URI variable.
-		//     Variable("version", String, "API version", func() {
-		//         // URL parameters must have a default value and/or an
-		//         // enum validation.
-		//         Default("v1")
-		//     })
-		// })
+		Host("production", func() {
+			Description("Production hosts.")
+			// URIs can be parameterized using {param} notation.
+			URI("https://want-go-api.herokuapp.com/")
+		})
 	})
 
 	cors.Origin("*", func() {
