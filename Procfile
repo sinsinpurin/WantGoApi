@@ -1,1 +1,1 @@
-api: .want_go_api
+web: .want_go_api
