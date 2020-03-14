@@ -116,6 +116,28 @@ func main() {
 			}
 			handleHTTPServer(ctx, u, wantGoEndpoints, &wg, errc, logger, *dbgF)
 		}
+	case "production":
+		{
+			addr := "https://want-go-api.herokuapp.com"
+			u, err := url.Parse(addr)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "invalid URL %#v: %s", addr, err)
+				os.Exit(1)
+			}
+			if *secureF {
+				u.Scheme = "https"
+			}
+			if *domainF != "" {
+				u.Host = *domainF
+			}
+			if *httpPortF != "" {
+				h := strings.Split(u.Host, ":")[0]
+				u.Host = h + ":" + *httpPortF
+			} else if u.Port() == "" {
+				u.Host += ":443"
+			}
+			handleHTTPServer(ctx, u, wantGoEndpoints, &wg, errc, logger, *dbgF)
+		}
 
 	default:
 		fmt.Fprintf(os.Stderr, "invalid host argument: %q (valid hosts: development)\n", *hostF)
