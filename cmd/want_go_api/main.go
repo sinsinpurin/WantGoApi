@@ -96,7 +96,7 @@ func main() {
 	switch *hostF {
 	case "development":
 		{
-			addr := "http://localhost:8081"
+			addr := "http://localhost:" + defaultAddr()
 			u, err := url.Parse(addr)
 
 			// var addr = flag.String("addr", defaultAddr(), "server address")
