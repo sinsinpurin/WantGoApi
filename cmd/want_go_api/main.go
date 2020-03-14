@@ -31,7 +31,7 @@ func main() {
 	var (
 		hostF     = flag.String("host", "development", "Server host (valid values: production)")
 		domainF   = flag.String("domain", "", "Host domain name (overrides host domain specified in service design)")
-		httpPortF = flag.String("http-port", "", "HTTP port (overrides host HTTP port specified in service design)")
+		httpPortF = flag.String("http-port", "PORT", "HTTP port (overrides host HTTP port specified in service design)")
 		secureF   = flag.Bool("secure", false, "Use secure scheme (https or grpcs)")
 		dbgF      = flag.Bool("debug", false, "Log request and response bodies")
 	)
@@ -121,7 +121,7 @@ func main() {
 		}
 	case "production":
 		{
-			addr := "https://want-go-api.herokuapp.com"
+			addr := "http://localhost" + defaultAddr()
 			u, err := url.Parse(addr)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "invalid URL %#v: %s", addr, err)
