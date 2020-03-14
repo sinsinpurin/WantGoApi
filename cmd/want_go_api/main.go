@@ -20,9 +20,9 @@ import (
 
 func defaultAddr() string {
 	if s := os.Getenv("PORT"); s != "" {
-		return ":" + s
+		return s
 	}
-	return ":8081"
+	return "8081"
 }
 
 func main() {
@@ -50,8 +50,8 @@ func main() {
 	)
 	{
 		var err error
-		db, err = sql.Open("postgres", "host=ec2-54-152-175-141.compute-1.amazonaws.com user=rxhxfpnzcqbssl password=6ef26778ae7ae04a7ca5392272505eafba6df47f8bd63a2f8d98e6fad1f9683b dbname=dacs3r0n7hnrmp sslmode=require")
-		// db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+		// db, err = sql.Open("postgres", "host=ec2-54-152-175-141.compute-1.amazonaws.com user=rxhxfpnzcqbssl password=6ef26778ae7ae04a7ca5392272505eafba6df47f8bd63a2f8d98e6fad1f9683b dbname=dacs3r0n7hnrmp sslmode=require")
+		db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 		// db, err = sql.Open("postgres", "host=localhost user=postgres password=masaki19980929 dbname=want-go-db-test sslmode=disable")
 
 		if err != nil {
@@ -115,8 +115,10 @@ func main() {
 				h := strings.Split(u.Host, ":")[0]
 				u.Host = h + ":" + *httpPortF
 			} else if u.Port() == "" {
-				u.Host += defaultAddr()
+				u.Host += ":" + defaultAddr()
 			}
+
+			logger.Printf(u.Path)
 			handleHTTPServer(ctx, u, wantGoEndpoints, &wg, errc, logger, *dbgF)
 		}
 	case "production":
