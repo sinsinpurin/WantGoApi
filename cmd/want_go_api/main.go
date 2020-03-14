@@ -118,7 +118,6 @@ func main() {
 				u.Host += ":" + defaultAddr()
 			}
 
-			logger.Printf(u.Path)
 			handleHTTPServer(ctx, u, wantGoEndpoints, &wg, errc, logger, *dbgF)
 		}
 	case "production":
