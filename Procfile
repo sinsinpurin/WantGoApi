@@ -1,1 +1,1 @@
-web: want_go_api -http-port $PORT
+worker: want_go_api -http-port $PORT
