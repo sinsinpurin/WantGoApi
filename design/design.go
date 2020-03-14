@@ -14,10 +14,10 @@ var _ = API("WantGoApi", func() {
 		URL("https://github.com/goadesign/goa/blob/master/LICENSE")
 	})
 	Server("WantGoApi", func() {
-		// Host("development", func() {
-		// 	Description("Development host")
-		// 	URI("http://localhost:8081")
-		// })
+		Host("development", func() {
+			Description("Development host")
+			URI("http://localhost:8081")
+		})
 		// production host
 		Host("production", func() {
 			Description("Production hosts.")

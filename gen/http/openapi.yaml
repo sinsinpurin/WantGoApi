@@ -6,7 +6,7 @@ info:
     name: MIT
     url: https://github.com/goadesign/goa/blob/master/LICENSE
   version: ""
-host: want-go-api.herokuapp.com
+host: localhost:8081
 consumes:
 - application/json
 - application/xml
@@ -36,7 +36,7 @@ paths:
         "200":
           description: OK response.
       schemes:
-      - https
+      - http
   /card-list:
     get:
       tags:
@@ -51,7 +51,7 @@ paths:
             items:
               $ref: '#/definitions/simpleCardResponse'
       schemes:
-      - https
+      - http
   /card/{cardId}:
     get:
       tags:
@@ -69,7 +69,7 @@ paths:
           schema:
             $ref: '#/definitions/WantGoGetCardInfoResponseBody'
       schemes:
-      - https
+      - http
     put:
       tags:
       - WantGo
@@ -93,7 +93,7 @@ paths:
         "200":
           description: OK response.
       schemes:
-      - https
+      - http
     delete:
       tags:
       - WantGo
@@ -109,7 +109,7 @@ paths:
         "200":
           description: OK response.
       schemes:
-      - https
+      - http
   /openapi.json:
     get:
       tags:
@@ -122,6 +122,7 @@ paths:
           schema:
             type: file
       schemes:
+      - http
       - https
 definitions:
   WantGoGetCardInfoResponseBody:

@@ -32,8 +32,8 @@ func main() {
 		hostF     = flag.String("host", "development", "Server host (valid values: development)")
 		domainF   = flag.String("domain", "", "Host domain name (overrides host domain specified in service design)")
 		httpPortF = flag.String("http-port", "", "HTTP port (overrides host HTTP port specified in service design)")
-		secureF   = flag.Bool("secure", false, "Use secure scheme (https or grpcs)")
-		dbgF      = flag.Bool("debug", false, "Log request and response bodies")
+		secureF   = flag.Bool("secure", true, "Use secure scheme (https or grpcs)")
+		dbgF      = flag.Bool("debug", true, "Log request and response bodies")
 	)
 	flag.Parse()
 
@@ -93,9 +93,11 @@ func main() {
 	switch *hostF {
 	case "development":
 		{
-			var addr = flag.String("addr", defaultAddr(), "server address")
+			addr := "http://localhost:8081"
+			u, err := url.Parse(addr)
 
-			u, err := url.Parse(*addr)
+			// var addr = flag.String("addr", defaultAddr(), "server address")
+			// u, err := url.Parse(*addr)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "invalid URL %#v: %s\n", addr, err)
 				os.Exit(1)
