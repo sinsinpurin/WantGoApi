@@ -85,8 +85,9 @@ func main() {
 	switch *hostF {
 	case "development":
 		{
-			addr := "http://localhost:8081"
-			u, err := url.Parse(addr)
+			var addr = flag.String("addr", defaultAddr(), "server address")
+
+			u, err := url.Parse(*addr)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "invalid URL %#v: %s\n", addr, err)
 				os.Exit(1)
@@ -118,4 +119,11 @@ func main() {
 
 	wg.Wait()
 	logger.Println("exited")
+}
+
+func defaultAddr() string {
+	if s := os.Getenv("PORT"); s != "" {
+		return ":" + s
+	}
+	return ":8080"
 }
