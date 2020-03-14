@@ -3,7 +3,7 @@ info:
   title: WantGo API
   description: This is WantGoAPI
   version: ""
-host: localhost:8081
+host: want-go-api.herokuapp.com
 consumes:
 - application/json
 - application/xml
@@ -33,7 +33,7 @@ paths:
         "200":
           description: OK response.
       schemes:
-      - http
+      - https
   /card-list:
     get:
       tags:
@@ -48,7 +48,7 @@ paths:
             items:
               $ref: '#/definitions/simpleCardResponse'
       schemes:
-      - http
+      - https
   /card/{cardId}:
     get:
       tags:
@@ -66,7 +66,7 @@ paths:
           schema:
             $ref: '#/definitions/WantGoGetCardInfoResponseBody'
       schemes:
-      - http
+      - https
     put:
       tags:
       - WantGo
@@ -90,7 +90,7 @@ paths:
         "200":
           description: OK response.
       schemes:
-      - http
+      - https
     delete:
       tags:
       - WantGo
@@ -106,7 +106,7 @@ paths:
         "200":
           description: OK response.
       schemes:
-      - http
+      - https
   /openapi.json:
     get:
       tags:
@@ -119,7 +119,6 @@ paths:
           schema:
             type: file
       schemes:
-      - http
       - https
 definitions:
   WantGoGetCardInfoResponseBody:

@@ -9,15 +9,15 @@ var _ = API("WantGoApi", func() {
 	Title("WantGo API")
 	Description("This is WantGoAPI")
 	Server("WantGoApi", func() {
-		Host("development", func() {
-			Description("Development host")
-			URI("http://localhost:8081")
-		})
+		// Host("development", func() {
+		// 	Description("Development host")
+		// 	URI("http://localhost:8081")
+		// })
 		// production host
 		Host("production", func() {
 			Description("Production hosts.")
 			// URIs can be parameterized using {param} notation.
-			URI("https://want-go-api.herokuapp.com/")
+			URI("https://want-go-api.herokuapp.com")
 		})
 	})
 
