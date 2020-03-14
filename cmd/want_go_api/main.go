@@ -22,7 +22,7 @@ func defaultAddr() string {
 	if s := os.Getenv("PORT"); s != "" {
 		return ":" + s
 	}
-	return ":8080"
+	return ":8081"
 }
 
 func main() {
@@ -31,7 +31,7 @@ func main() {
 	var (
 		hostF     = flag.String("host", "development", "Server host (valid values: production)")
 		domainF   = flag.String("domain", "", "Host domain name (overrides host domain specified in service design)")
-		httpPortF = flag.String("http-port", "PORT", "HTTP port (overrides host HTTP port specified in service design)")
+		httpPortF = flag.String("http-port", os.Getenv("PORT"), "HTTP port (overrides host HTTP port specified in service design)")
 		secureF   = flag.Bool("secure", false, "Use secure scheme (https or grpcs)")
 		dbgF      = flag.Bool("debug", false, "Log request and response bodies")
 	)
@@ -96,7 +96,7 @@ func main() {
 	switch *hostF {
 	case "development":
 		{
-			addr := "http://localhost" + defaultAddr()
+			addr := "http://localhost:8081"
 			u, err := url.Parse(addr)
 
 			// var addr = flag.String("addr", defaultAddr(), "server address")
