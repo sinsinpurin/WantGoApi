@@ -50,7 +50,8 @@ func main() {
 	)
 	{
 		var err error
-		db, err = sql.Open("postgres", "user=rxhxfpnzcqbssl passward=6ef26778ae7ae04a7ca5392272505eafba6df47f8bd63a2f8d98e6fad1f9683b host=ec2-54-152-175-141.compute-1.amazonaws.com port=5432 dbname=dacs3r0n7hnrmp")
+		// db, err = sql.Open("postgres", "host=ec2-54-152-175-141.compute-1.amazonaws.com user=rxhxfpnzcqbssl passward=6ef26778ae7ae04a7ca5392272505eafba6df47f8bd63a2f8d98e6fad1f9683b dbname=dacs3r0n7hnrmp sslmode=require")
+		db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 		if err != nil {
 			panic(err.Error())
 		}
