@@ -6,6 +6,7 @@ require (
 	github.com/BcRikko/learning-goa v0.0.0-20180523034425-beed18fd2c36
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.3.4 // indirect
+	github.com/lib/pq v1.3.0
 	github.com/pkg/errors v0.9.1 // indirect
 	goa.design/goa v2.1.1+incompatible
 	goa.design/goa/v3 v3.0.10

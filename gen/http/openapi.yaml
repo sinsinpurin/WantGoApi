@@ -2,6 +2,9 @@ swagger: "2.0"
 info:
   title: WantGo API
   description: This is WantGoAPI
+  license:
+    name: MIT
+    url: https://github.com/goadesign/goa/blob/master/LICENSE
   version: ""
 host: want-go-api.herokuapp.com
 consumes:

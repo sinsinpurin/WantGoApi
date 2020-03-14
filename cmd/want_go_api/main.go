@@ -15,7 +15,15 @@ import (
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
+
+func defaultAddr() string {
+	if s := os.Getenv("PORT"); s != "" {
+		return ":" + s
+	}
+	return ":8080"
+}
 
 func main() {
 	// Define command line flags, add any other flag required to configure the
@@ -119,11 +127,4 @@ func main() {
 
 	wg.Wait()
 	logger.Println("exited")
-}
-
-func defaultAddr() string {
-	if s := os.Getenv("PORT"); s != "" {
-		return ":" + s
-	}
-	return ":8080"
 }

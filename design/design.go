@@ -8,6 +8,11 @@ import (
 var _ = API("WantGoApi", func() {
 	Title("WantGo API")
 	Description("This is WantGoAPI")
+	// API License
+	License(func() {
+		Name("MIT")
+		URL("https://github.com/goadesign/goa/blob/master/LICENSE")
+	})
 	Server("WantGoApi", func() {
 		// Host("development", func() {
 		// 	Description("Development host")
