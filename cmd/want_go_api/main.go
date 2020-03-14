@@ -19,7 +19,7 @@ import (
 )
 
 func defaultAddr() string {
-	if s := os.Getenv("$PORT"); s != "" {
+	if s := os.Getenv("PORT"); s != "" {
 		return ":" + s
 	}
 	return ":8080"
