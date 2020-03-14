@@ -115,7 +115,7 @@ func main() {
 				h := strings.Split(u.Host, ":")[0]
 				u.Host = h + ":" + *httpPortF
 			} else if u.Port() == "" {
-				u.Host += ":80"
+				u.Host += defaultAddr()
 			}
 			handleHTTPServer(ctx, u, wantGoEndpoints, &wg, errc, logger, *dbgF)
 		}
