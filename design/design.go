@@ -27,7 +27,9 @@ var _ = API("WantGoApi", func() {
 	})
 
 	cors.Origin("https://wantgo-facf0.firebaseapp.com", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", "application/json", "Origin", "Accept")
+		// cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", "application/json", "Origin", "Accept")
+
+		cors.Headers("*")
 		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.MaxAge(600)
 	})
