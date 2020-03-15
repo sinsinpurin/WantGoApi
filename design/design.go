@@ -30,7 +30,6 @@ var _ = API("WantGoApi", func() {
 		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", " application/json", "Origin", "Accept")
 		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.MaxAge(600)
-		cors.Credentials()
 	})
 
 	cors.Origin("http://localhost:8080", func() {
