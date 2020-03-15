@@ -412,7 +412,7 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
 				// We are handling a preflight request
 				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization")
+				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization,  application/json, Origin, Accept")
 			}
 			origHndlr(w, r)
 			return
@@ -425,7 +425,7 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
 				// We are handling a preflight request
 				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization, X-XSRF-TOKEN, application/json;charset=utf-8, Origin, Accept")
+				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization, X-XSRF-TOKEN, Origin, Accept")
 			}
 			origHndlr(w, r)
 			return
