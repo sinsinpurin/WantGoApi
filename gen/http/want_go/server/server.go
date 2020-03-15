@@ -418,6 +418,19 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			origHndlr(w, r)
 			return
 		}
+		if cors.MatchOrigin(origin, "https://wantgo-facf0.web.app") {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Vary", "Origin")
+			w.Header().Set("Access-Control-Max-Age", "600")
+			w.Header().Set("Access-Control-Allow-Credentials", "false")
+			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
+				// We are handling a preflight request
+				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization, application/json, Origin, Accept")
+			}
+			origHndlr(w, r)
+			return
+		}
 		origHndlr(w, r)
 		return
 	})
