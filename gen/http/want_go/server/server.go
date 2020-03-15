@@ -405,66 +405,15 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			origHndlr(w, r)
 			return
 		}
-		if cors.MatchOrigin(origin, "*") {
+		if cors.MatchOrigin(origin, "https://wantgo-facf0.firebaseapp.com") {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Vary", "Origin")
 			w.Header().Set("Access-Control-Max-Age", "600")
 			w.Header().Set("Access-Control-Allow-Credentials", "false")
 			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
 				// We are handling a preflight request
 				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization,  application/json, Origin, Accept")
-			}
-			origHndlr(w, r)
-			return
-		}
-		if cors.MatchOrigin(origin, "http://192.168.1.5:8080") {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Vary", "Origin")
-			w.Header().Set("Access-Control-Max-Age", "600")
-			w.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization, X-XSRF-TOKEN, Origin, Accept")
-			}
-			origHndlr(w, r)
-			return
-		}
-		if cors.MatchOrigin(origin, "http://192.168.3.50:8080") {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Vary", "Origin")
-			w.Header().Set("Access-Control-Max-Age", "600")
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
-			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization")
-			}
-			origHndlr(w, r)
-			return
-		}
-		if cors.MatchOrigin(origin, "http://localhost:5000") {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Vary", "Origin")
-			w.Header().Set("Access-Control-Max-Age", "600")
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
-			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization, Accept")
-			}
-			origHndlr(w, r)
-			return
-		}
-		if cors.MatchOrigin(origin, "http://localhost:8080") {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Vary", "Origin")
-			w.Header().Set("Access-Control-Max-Age", "600")
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
-			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization")
 			}
 			origHndlr(w, r)
 			return

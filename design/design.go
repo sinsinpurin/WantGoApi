@@ -26,38 +26,10 @@ var _ = API("WantGoApi", func() {
 		})
 	})
 
-	cors.Origin("*", func() {
+	cors.Origin("https://wantgo-facf0.firebaseapp.com", func() {
 		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", " application/json", "Origin", "Accept")
 		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.MaxAge(600)
-	})
-
-	cors.Origin("http://localhost:8080", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization")
-		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-		cors.MaxAge(600)
-		cors.Credentials()
-	})
-
-	cors.Origin("http://192.168.3.50:8080", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization")
-		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-		cors.MaxAge(600)
-		cors.Credentials()
-	})
-
-	cors.Origin("http://192.168.1.5:8080", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", "X-XSRF-TOKEN", "Origin", "Accept")
-		//cors.Headers("*")
-		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-		cors.MaxAge(600)
-	})
-
-	cors.Origin("http://localhost:5000", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", "Accept")
-		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-		cors.MaxAge(600)
-		cors.Credentials()
 	})
 })
 
