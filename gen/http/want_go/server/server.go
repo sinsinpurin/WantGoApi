@@ -405,8 +405,9 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			origHndlr(w, r)
 			return
 		}
-		if cors.MatchOrigin(origin, "*") {
+		if cors.MatchOrigin(origin, "https://wantgo-facf0.firebaseapp.com") {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Vary", "Origin")
 			w.Header().Set("Access-Control-Expose-Headers", "X-Time")
 			w.Header().Set("Access-Control-Max-Age", "600")
 			w.Header().Set("Access-Control-Allow-Credentials", "false")
