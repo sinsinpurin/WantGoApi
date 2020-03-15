@@ -27,11 +27,9 @@ var _ = API("WantGoApi", func() {
 	})
 
 	cors.Origin("*", func() {
-		// cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", "application/json", "Origin", "Accept")
-		cors.Headers("*")
-		// cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", "application/json", "Origin", "Accept")
+		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.Expose("X-Time")
-		cors.Methods("*")
 		cors.MaxAge(600)
 	})
 
