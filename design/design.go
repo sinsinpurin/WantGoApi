@@ -30,7 +30,8 @@ var _ = API("WantGoApi", func() {
 		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Authorization", "application/json", "Origin", "Accept", "text/plain")
 		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.Expose("X-Time")
-		cors.MaxAge(600)
+		//cors.MaxAge(600)
+		cors.MaxAge(30)
 	})
 
 	cors.Origin("https://wantgo-facf0.web.app", func() {
