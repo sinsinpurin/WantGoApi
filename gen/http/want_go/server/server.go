@@ -414,7 +414,7 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
 				// We are handling a preflight request
 				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, application/json, text/plain")
+				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, application/json, text/plain, Origin, Accept")
 			}
 			origHndlr(w, r)
 			return
