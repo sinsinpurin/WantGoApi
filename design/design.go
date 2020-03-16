@@ -31,6 +31,7 @@ var _ = API("WantGoApi", func() {
 		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.Expose("X-Time")
 		//cors.MaxAge(600)
+		cors.Credentials()
 		cors.MaxAge(30)
 	})
 
