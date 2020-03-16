@@ -431,7 +431,7 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			origHndlr(w, r)
 			return
 		}
-		if cors.MatchOrigin(origin, "https://wantgo-facf0.web.app/card/2") {
+		if cors.MatchOrigin(origin, "https://wantgo-facf0.web.app/*") {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
 			w.Header().Set("Vary", "Origin")
 			w.Header().Set("Access-Control-Max-Age", "600")
