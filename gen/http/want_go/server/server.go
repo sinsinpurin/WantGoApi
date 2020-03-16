@@ -14,7 +14,6 @@ import (
 
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
-	"goa.design/plugins/v3/cors"
 )
 
 // Server lists the WantGo service endpoint HTTP handlers.
@@ -25,7 +24,6 @@ type Server struct {
 	PostCardInfo      http.Handler
 	PutCardInfo       http.Handler
 	DeleteCardInfo    http.Handler
-	CORS              http.Handler
 }
 
 // ErrorNamer is an interface implemented by generated error structs that
@@ -66,10 +64,6 @@ func New(
 			{"PostCardInfo", "POST", "/card"},
 			{"PutCardInfo", "PUT", "/card/{cardId}"},
 			{"DeleteCardInfo", "DELETE", "/card/{cardId}"},
-			{"CORS", "OPTIONS", "/card-list"},
-			{"CORS", "OPTIONS", "/card/{cardId}"},
-			{"CORS", "OPTIONS", "/card"},
-			{"CORS", "OPTIONS", "/openapi.json"},
 			{"./gen/http/openapi.json", "GET", "/openapi.json"},
 		},
 		GetSimpleCardList: NewGetSimpleCardListHandler(e.GetSimpleCardList, mux, decoder, encoder, errhandler, formatter),
@@ -77,7 +71,6 @@ func New(
 		PostCardInfo:      NewPostCardInfoHandler(e.PostCardInfo, mux, decoder, encoder, errhandler, formatter),
 		PutCardInfo:       NewPutCardInfoHandler(e.PutCardInfo, mux, decoder, encoder, errhandler, formatter),
 		DeleteCardInfo:    NewDeleteCardInfoHandler(e.DeleteCardInfo, mux, decoder, encoder, errhandler, formatter),
-		CORS:              NewCORSHandler(),
 	}
 }
 
@@ -91,7 +84,6 @@ func (s *Server) Use(m func(http.Handler) http.Handler) {
 	s.PostCardInfo = m(s.PostCardInfo)
 	s.PutCardInfo = m(s.PutCardInfo)
 	s.DeleteCardInfo = m(s.DeleteCardInfo)
-	s.CORS = m(s.CORS)
 }
 
 // Mount configures the mux to serve the WantGo endpoints.
@@ -101,7 +93,6 @@ func Mount(mux goahttp.Muxer, h *Server) {
 	MountPostCardInfoHandler(mux, h.PostCardInfo)
 	MountPutCardInfoHandler(mux, h.PutCardInfo)
 	MountDeleteCardInfoHandler(mux, h.DeleteCardInfo)
-	MountCORSHandler(mux, h.CORS)
 	MountGenHTTPOpenapiJSON(mux, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./gen/http/openapi.json")
 	}))
@@ -110,7 +101,7 @@ func Mount(mux goahttp.Muxer, h *Server) {
 // MountGetSimpleCardListHandler configures the mux to serve the "WantGo"
 // service "getSimpleCardList" endpoint.
 func MountGetSimpleCardListHandler(mux goahttp.Muxer, h http.Handler) {
-	f, ok := handleWantGoOrigin(h).(http.HandlerFunc)
+	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
 			h.ServeHTTP(w, r)
@@ -156,7 +147,7 @@ func NewGetSimpleCardListHandler(
 // MountGetCardInfoHandler configures the mux to serve the "WantGo" service
 // "getCardInfo" endpoint.
 func MountGetCardInfoHandler(mux goahttp.Muxer, h http.Handler) {
-	f, ok := handleWantGoOrigin(h).(http.HandlerFunc)
+	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
 			h.ServeHTTP(w, r)
@@ -209,7 +200,7 @@ func NewGetCardInfoHandler(
 // MountPostCardInfoHandler configures the mux to serve the "WantGo" service
 // "postCardInfo" endpoint.
 func MountPostCardInfoHandler(mux goahttp.Muxer, h http.Handler) {
-	f, ok := handleWantGoOrigin(h).(http.HandlerFunc)
+	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
 			h.ServeHTTP(w, r)
@@ -262,7 +253,7 @@ func NewPostCardInfoHandler(
 // MountPutCardInfoHandler configures the mux to serve the "WantGo" service
 // "putCardInfo" endpoint.
 func MountPutCardInfoHandler(mux goahttp.Muxer, h http.Handler) {
-	f, ok := handleWantGoOrigin(h).(http.HandlerFunc)
+	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
 			h.ServeHTTP(w, r)
@@ -315,7 +306,7 @@ func NewPutCardInfoHandler(
 // MountDeleteCardInfoHandler configures the mux to serve the "WantGo" service
 // "deleteCardInfo" endpoint.
 func MountDeleteCardInfoHandler(mux goahttp.Muxer, h http.Handler) {
-	f, ok := handleWantGoOrigin(h).(http.HandlerFunc)
+	f, ok := h.(http.HandlerFunc)
 	if !ok {
 		f = func(w http.ResponseWriter, r *http.Request) {
 			h.ServeHTTP(w, r)
@@ -368,85 +359,5 @@ func NewDeleteCardInfoHandler(
 // MountGenHTTPOpenapiJSON configures the mux to serve GET request made to
 // "/openapi.json".
 func MountGenHTTPOpenapiJSON(mux goahttp.Muxer, h http.Handler) {
-	mux.Handle("GET", "/openapi.json", handleWantGoOrigin(h).ServeHTTP)
-}
-
-// MountCORSHandler configures the mux to serve the CORS endpoints for the
-// service WantGo.
-func MountCORSHandler(mux goahttp.Muxer, h http.Handler) {
-	h = handleWantGoOrigin(h)
-	f, ok := h.(http.HandlerFunc)
-	if !ok {
-		f = func(w http.ResponseWriter, r *http.Request) {
-			h.ServeHTTP(w, r)
-		}
-	}
-	mux.Handle("OPTIONS", "/card-list", f)
-	mux.Handle("OPTIONS", "/card/{cardId}", f)
-	mux.Handle("OPTIONS", "/card", f)
-	mux.Handle("OPTIONS", "/openapi.json", f)
-}
-
-// NewCORSHandler creates a HTTP handler which returns a simple 200 response.
-func NewCORSHandler() http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
-	})
-}
-
-// handleWantGoOrigin applies the CORS response headers corresponding to the
-// origin for the service WantGo.
-func handleWantGoOrigin(h http.Handler) http.Handler {
-	origHndlr := h.(http.HandlerFunc)
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		origin := r.Header.Get("Origin")
-		if origin == "" {
-			// Not a CORS request
-			origHndlr(w, r)
-			return
-		}
-		if cors.MatchOrigin(origin, "https://wantgo-facf0.firebaseapp.com") {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Vary", "Origin")
-			w.Header().Set("Access-Control-Expose-Headers", "X-Time")
-			w.Header().Set("Access-Control-Max-Age", "30")
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
-			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, application/json, Accept, text/plain")
-			}
-			origHndlr(w, r)
-			return
-		}
-		if cors.MatchOrigin(origin, "https://wantgo-facf0.firebaseapp.com/card-detail/2") {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Vary", "Origin")
-			w.Header().Set("Access-Control-Expose-Headers", "X-Time")
-			w.Header().Set("Access-Control-Max-Age", "30")
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
-			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, application/json, Accept, text/plain")
-			}
-			origHndlr(w, r)
-			return
-		}
-		if cors.MatchOrigin(origin, "https://wantgo-facf0.web.app") {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Vary", "Origin")
-			w.Header().Set("Access-Control-Max-Age", "600")
-			w.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := r.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-				w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, X-Token-Auth, Authorization, application/json, Origin, Accept, text/plain")
-			}
-			origHndlr(w, r)
-			return
-		}
-		origHndlr(w, r)
-		return
-	})
+	mux.Handle("GET", "/openapi.json", h.ServeHTTP)
 }
