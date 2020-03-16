@@ -2,7 +2,6 @@ package design
 
 import (
 	. "goa.design/goa/v3/dsl"
-	cors "goa.design/plugins/v3/cors/dsl"
 )
 
 var _ = API("WantGoApi", func() {
@@ -38,11 +37,11 @@ var _ = API("WantGoApi", func() {
 	// 	cors.MaxAge(600)
 	// })
 
-	cors.Origin("*", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "Accept", "Origin")
-		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-		cors.MaxAge(600)
-	})
+	// cors.Origin("*", func() {
+	// 	cors.Headers("X-Requested-With", "Content-Type", "Accept", "Origin")
+	// 	cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+	// 	cors.MaxAge(600)
+	// })
 })
 
 var simpleCard = Type("simpleCard", func() {
