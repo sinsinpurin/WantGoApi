@@ -11,6 +11,7 @@ import (
 	wantgo "WantGoApi/gen/want_go"
 	"context"
 	"net/http"
+	"regexp"
 
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
@@ -397,6 +398,7 @@ func NewCORSHandler() http.Handler {
 // handleWantGoOrigin applies the CORS response headers corresponding to the
 // origin for the service WantGo.
 func handleWantGoOrigin(h http.Handler) http.Handler {
+	spec0 := regexp.MustCompile(".*wantgo-facf0.firebaseapp.*")
 	origHndlr := h.(http.HandlerFunc)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
@@ -405,7 +407,7 @@ func handleWantGoOrigin(h http.Handler) http.Handler {
 			origHndlr(w, r)
 			return
 		}
-		if cors.MatchOrigin(origin, "https://wantgo-facf0.firebaseapp.com") {
+		if cors.MatchOriginRegexp(origin, spec0) {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
 			w.Header().Set("Vary", "Origin")
 			w.Header().Set("Access-Control-Max-Age", "600")
