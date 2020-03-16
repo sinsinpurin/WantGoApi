@@ -15,7 +15,7 @@ var _ = API("WantGoApi", func() {
 	Server("WantGoApi", func() {
 		Host("development", func() {
 			Description("Development host")
-			URI("http://localhost:8081")
+			URI("http://0.0.0.0:8081")
 		})
 		// production host
 		Host("production", func() {

@@ -6,7 +6,7 @@ info:
     name: MIT
     url: https://github.com/goadesign/goa/blob/master/LICENSE
   version: ""
-host: localhost:8081
+host: 0.0.0.0:8081
 consumes:
 - application/json
 - application/xml
