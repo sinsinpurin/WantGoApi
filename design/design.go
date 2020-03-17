@@ -22,7 +22,7 @@ var _ = API("WantGoApi", func() {
 		Host("production", func() {
 			Description("Production hosts.")
 			// URIs can be parameterized using {param} notation.
-			URI("https://want-go-api.herokuapp.com")
+			URI("http://0.0.0.0:8081")
 		})
 	})
 
