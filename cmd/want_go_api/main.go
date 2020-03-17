@@ -51,7 +51,11 @@ func main() {
 	{
 		var err error
 		db, err = sql.Open("postgres", "host=ec2-54-152-175-141.compute-1.amazonaws.com user=rxhxfpnzcqbssl password=6ef26778ae7ae04a7ca5392272505eafba6df47f8bd63a2f8d98e6fad1f9683b dbname=dacs3r0n7hnrmp sslmode=require")
+
+		//*使わない
 		// db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+
+		// local db
 		// db, err = sql.Open("postgres", "host=localhost user=postgres password=masaki19980929 dbname=want-go-db-test sslmode=disable")
 
 		if err != nil {
@@ -117,7 +121,6 @@ func main() {
 			} else if u.Port() == "" {
 				u.Host += ":" + defaultAddr()
 			}
-
 			handleHTTPServer(ctx, u, wantGoEndpoints, &wg, errc, logger, *dbgF)
 		}
 	case "production":
