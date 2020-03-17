@@ -63,7 +63,7 @@ func (s *wantGosrvc) GetCardInfo(ctx context.Context, p *wantgo.GetCardInfoPaylo
 func (s *wantGosrvc) PostCardInfo(ctx context.Context, p *wantgo.PostCardInfoPayload) (err error) {
 	s.logger.Println("wantGo.postCardInfo")
 
-	_, erro := s.db.Exec(`INSERT INTO "public"."WantCard" ("cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl") VALUES ( ? , ? , ? , ? , ? , ? , ? );`,
+	_, erro := s.db.Exec(`INSERT INTO "public"."WantCard" ("cardAuthor", "cardTitle", "cardDescription", "tags", "imageUrl", "locationAddress", "locationUrl") VALUES ( $1 , $2 , $3 , $4 , $5 , $6 , $7 );`,
 		p.CardAuthor,
 		p.CardTitle,
 		p.CardDescription,
@@ -83,7 +83,7 @@ func (s *wantGosrvc) PostCardInfo(ctx context.Context, p *wantgo.PostCardInfoPay
 func (s *wantGosrvc) PutCardInfo(ctx context.Context, p *wantgo.PutCardInfoPayload) (err error) {
 	s.logger.Print("wantGo.putCardInfo")
 
-	_, erro := s.db.Exec(`UPDATE "public"."WantCard" SET "cardAuthor" = ? , "cardTitle" = ? , "cardDescription" = ? , "tags" = ? , "imageUrl" = ? , "locationAddress" = ? , "locationUrl" = ? WHERE "cardId" = ? ;`,
+	_, erro := s.db.Exec(`UPDATE "public"."WantCard" SET "cardAuthor" = $1 , "cardTitle" = $2 , "cardDescription" = $3 , "tags" = $4 , "imageUrl" = $5 , "locationAddress" = $6 , "locationUrl" = $7 WHERE "cardId" = $8 ;`,
 		p.CardAuthor,
 		p.CardTitle,
 		p.CardDescription,
@@ -104,7 +104,7 @@ func (s *wantGosrvc) PutCardInfo(ctx context.Context, p *wantgo.PutCardInfoPaylo
 func (s *wantGosrvc) DeleteCardInfo(ctx context.Context, p *wantgo.DeleteCardInfoPayload) (err error) {
 	s.logger.Print("wantGo.deleteCardInfo")
 	s.logger.Print(p.CardID)
-	_, err = s.db.Exec(`DELETE FROM "WantCard" WHERE "cardId" = ?`, p.CardID)
+	_, err = s.db.Exec(`DELETE FROM "WantCard" WHERE "cardId" = $1`, p.CardID)
 	if err != nil {
 		log.Fatal(err)
 	}
