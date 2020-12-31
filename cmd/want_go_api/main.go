@@ -29,7 +29,7 @@ func main() {
 	// Define command line flags, add any other flag required to configure the
 	// service.
 	var (
-		hostF     = flag.String("host", "production", "Server host (valid values: production)")
+		hostF     = flag.String("host", "development", "Server host (valid values: production)")
 		domainF   = flag.String("domain", "0.0.0.0", "Host domain name (overrides host domain specified in service design)")
 		httpPortF = flag.String("http-port", os.Getenv("PORT"), "HTTP port (overrides host HTTP port specified in service design)")
 		secureF   = flag.Bool("secure", false, "Use secure scheme (https or grpcs)")
@@ -53,10 +53,10 @@ func main() {
 		//db, err = sql.Open("postgres", "host=ec2-54-152-175-141.compute-1.amazonaws.com user=rxhxfpnzcqbssl password=6ef26778ae7ae04a7ca5392272505eafba6df47f8bd63a2f8d98e6fad1f9683b dbname=dacs3r0n7hnrmp sslmode=require")
 
 		//*使わない
-		db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+		//db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 
 		// local db
-		//db, err = sql.Open("postgres", "host=localhost user=postgres password=masaki19980929 dbname=want-go-db-test sslmode=disable")
+		db, err = sql.Open("postgres", "host=localhost user=postgres password=masaki19980929 dbname=want-go-db-test sslmode=disable")
 
 		if err != nil {
 			panic(err.Error())
@@ -100,7 +100,7 @@ func main() {
 	switch *hostF {
 	case "development":
 		{
-			addr := "http://0.0.0.0:8081"
+			addr := "http://127.0.0.1:8081"
 			u, err := url.Parse(addr)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "invalid URL %#v: %s\n", addr, err)

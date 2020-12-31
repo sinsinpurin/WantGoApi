@@ -32,6 +32,12 @@ var _ = API("WantGoApi", func() {
 		cors.MaxAge(600)
 	})
 
+	cors.Origin("http://localhost:8080", func() {
+		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Origin", "Accept")
+		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+		cors.MaxAge(600)
+	})
+
 })
 
 var simpleCard = Type("simpleCard", func() {
