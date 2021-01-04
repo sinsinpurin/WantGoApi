@@ -16,7 +16,7 @@ var _ = API("WantGoApi", func() {
 	Server("WantGoApi", func() {
 		Host("development", func() {
 			Description("Development host")
-			URI("http://0.0.0.0:8081")
+			URI("http://127.0.0.1:8081")
 		})
 		// production host
 		Host("production", func() {
@@ -27,13 +27,13 @@ var _ = API("WantGoApi", func() {
 	})
 
 	cors.Origin("https://wantgo-facf0.firebaseapp.com", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Origin", "Accept")
+		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Origin", "Accept", "Authorization")
 		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.MaxAge(600)
 	})
 
 	cors.Origin("http://localhost:8080", func() {
-		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Origin", "Accept")
+		cors.Headers("X-Requested-With", "Content-Type", "X-Token-Auth", "Origin", "Accept", "Authorization")
 		cors.Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 		cors.MaxAge(600)
 	})
@@ -63,18 +63,23 @@ var _ = Service("WantGo", func() {
 
 	Method("getSimpleCardList", func() {
 		Payload(func() {
+			Attribute("Authorization", String)
 		})
 
 		Result(ArrayOf(simpleCard))
 
 		HTTP(func() {
 			GET("/card-list")
+			Header("Authorization", String, func() {
+				Pattern("^Bearer [^ ]+$")
+			})
 			Response(StatusOK)
 		})
 	})
 
 	Method("getCardInfo", func() {
 		Payload(func() {
+			Attribute("Authorization", String)
 			Field(1, "cardId", String)
 			Required("cardId")
 		})
@@ -83,6 +88,9 @@ var _ = Service("WantGo", func() {
 
 		HTTP(func() {
 			GET("/card/{cardId}")
+			Header("Authorization", String, func() {
+				Pattern("^Bearer [^ ]+$")
+			})
 			Response(StatusOK)
 		})
 	})
@@ -98,13 +106,17 @@ var _ = Service("WantGo", func() {
 			Attribute("locationUrl", String, func() { Default("default") })
 
 			Required("cardAuthor", "cardTitle", "cardDescription")
+
+			Attribute("Authorization", String)
 		})
 
 		Result(Empty)
 
 		HTTP(func() {
 			POST("/card")
-
+			Header("Authorization", String, "Auth token", func() {
+				Pattern("^Bearer [^ ]+$")
+			})
 			Response(StatusOK)
 		})
 	})
@@ -122,13 +134,17 @@ var _ = Service("WantGo", func() {
 			Attribute("locationUrl", String, func() { Default("default") })
 
 			Required("cardId", "cardAuthor", "cardTitle", "cardDescription")
+
+			Attribute("Authorization", String)
 		})
 
 		Result(Empty)
 
 		HTTP(func() {
 			PUT("/card/{cardId}")
-
+			Header("Authorization", String, func() {
+				Pattern("^Bearer [^ ]+$")
+			})
 			Response(StatusOK)
 		})
 	})
@@ -137,12 +153,16 @@ var _ = Service("WantGo", func() {
 		Payload(func() {
 			Field(1, "cardId", Int, "card id")
 			Required("cardId")
+			Attribute("Authorization", String)
 		})
 
 		Result(Empty)
 
 		HTTP(func() {
 			DELETE("/card/{cardId}")
+			Header("Authorization", String, func() {
+				Pattern("^Bearer [^ ]+$")
+			})
 			Response(StatusOK)
 		})
 	})

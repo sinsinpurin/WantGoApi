@@ -1,24 +1,21 @@
 module WantGoApi
 
-go 1.13
+go 1.15
 
 require (
-	github.com/BcRikko/learning-goa v0.0.0-20180523034425-beed18fd2c36
+	github.com/getkin/kin-openapi v0.34.0 // indirect
+	github.com/go-openapi/validate v0.20.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
-	github.com/golang/protobuf v1.3.4 // indirect
-	github.com/kr/fs v0.1.0 // indirect
-	github.com/lib/pq v1.3.0
-	github.com/pkg/errors v0.9.1 // indirect
-	github.com/tools/godep v0.0.0-20180126220526-ce0bfadeb516 // indirect
-	goa.design/goa v2.1.1+incompatible
-	goa.design/goa/v3 v3.0.10
-	goa.design/plugins/v3 v3.0.10
-	golang.org/x/mod v0.2.0 // indirect
-	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
-	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
-	golang.org/x/tools v0.0.0-20200301222351-066e0c02454c // indirect
-	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
-	google.golang.org/genproto v0.0.0-20200302123026-7795fca6ccb1 // indirect
-	google.golang.org/grpc v1.27.1 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
+	github.com/google/go-cmp v0.5.4 // indirect
+	github.com/google/uuid v1.1.3 // indirect
+	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
+	github.com/lib/pq v1.9.0
+	github.com/smartystreets/assertions v1.2.0 // indirect
+	github.com/tidwall/pretty v1.0.2 // indirect
+	goa.design/goa/v3 v3.2.6
+	goa.design/plugins/v3 v3.2.6
+	golang.org/x/mod v0.4.0 // indirect
+	golang.org/x/net v0.0.0-20201224014010-6772e930b67b // indirect
+	golang.org/x/tools v0.0.0-20201230224404-63754364767c // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )

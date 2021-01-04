@@ -5,9 +5,12 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
+
+	authapi "WantGoApi/modules"
 )
 
 // WantGo service example implementation.
@@ -23,27 +26,40 @@ func NewWantGo(logger *log.Logger, db *sql.DB) wantgo.Service {
 }
 
 // GetSimpleCardList implements getSimpleCardList.
-func (s *wantGosrvc) GetSimpleCardList(ctx context.Context) (res []*wantgo.SimpleCard, err error) {
-	s.logger.Print("wantGo.getSimpleCardList")
+func (s *wantGosrvc) GetSimpleCardList(ctx context.Context, p *wantgo.GetSimpleCardListPayload) (res []*wantgo.SimpleCard, err error) {
+	tokenCheck := authapi.CheckAccess(*p.Authorization)
+	s.logger.Println(*p.Authorization)
+	s.logger.Println("\n [wantGo.getSimpleCardList] ")
+	s.logger.Println(tokenCheck.StatusCode)
+	s.logger.Println("\n [Access Token] \n" + *p.Authorization + "\n")
 	var responses []*wantgo.SimpleCard
-	rows, err := s.db.Query(`SELECT "cardId", "cardAuthor", "cardTitle", "imageUrl" FROM "WantCard"`)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		r := wantgo.SimpleCard{}
-		err := rows.Scan(&r.CardID, &r.CardAuthor, &r.CardTitle, &r.ImageURL)
+	switch tokenCheck.StatusCode {
+	case 422:
+		s.logger.Println(tokenCheck.StatusCode)
+		return responses, errors.New("Bad Token")
+	case 200:
+		s.logger.Println(tokenCheck.StatusCode)
+		rows, err := s.db.Query(`SELECT "cardId", "cardAuthor", "cardTitle", "imageUrl" FROM "WantCard"`)
 		if err != nil {
 			log.Fatal(err)
 		}
-		responses = append(responses, &r)
+		defer rows.Close()
+
+		for rows.Next() {
+			r := wantgo.SimpleCard{}
+			err := rows.Scan(&r.CardID, &r.CardAuthor, &r.CardTitle, &r.ImageURL)
+			if err != nil {
+				log.Fatal(err)
+			}
+			responses = append(responses, &r)
+		}
+		if err := rows.Err(); err != nil {
+			log.Fatal(err)
+		}
+		return responses, nil
 	}
-	if err := rows.Err(); err != nil {
-		log.Fatal(err)
-	}
-	return responses, nil
+	s.logger.Println(tokenCheck.StatusCode)
+	return responses, errors.New("Bad Token")
 }
 
 // GetCardInfo implements getCardInfo.
